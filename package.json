@@ -1,0 +1,28 @@
+{
+  "name": "smartobd2",
+  "version": "1.0.0",
+  "description": "Smart-OBD2 for sit725",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bozheng22/Smart-OBD2.git"
+  },
+  "keywords": [
+    "smart",
+    "OBD2",
+    "car"
+  ],
+  "author": "Miaoxuan Han Bo Zheng Jiaqi Li",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bozheng22/Smart-OBD2/issues"
+  },
+  "homepage": "https://github.com/bozheng22/Smart-OBD2#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}
