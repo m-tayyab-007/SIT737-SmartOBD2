@@ -2,10 +2,11 @@ button {
     background-color: #04AA6D;
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
+    margin: 8px 120px;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 50%;
+    text-align: center;
   }
 
 input[type=text], input[type=password] {
