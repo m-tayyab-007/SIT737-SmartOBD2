@@ -1,0 +1,45 @@
+<div class="row">
+    <img src="/assets/background.jpg" alt="backgroundImage" class="responsive-img" style="width:100%;">
+</div>
+<div class="loginSign_up">
+        <h1>Welcome to Smart OBD2</h1>
+        <div id="login-page" class="row">
+            <div class="col s12 z-depth-6 card-panel">
+                <form action="/users/login" method="POST">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">mail_outline</i>
+                            <input class="validate" name="email" type="email">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock_outline</i>
+                            <input name="password" type="password">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <p class="center red-text text-darken-4"><%- include ('./partials/messages') %></p>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button type="submit" class="login-btn btn waves-effect waves-light col s12">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col s12">
+                            <label>
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Remember Me</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+<h5 class="center">No account? <a href="/users/register">Sign Up</a> now</h5>

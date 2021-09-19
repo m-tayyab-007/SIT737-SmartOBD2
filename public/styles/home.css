@@ -1,0 +1,93 @@
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255, 255, 255, 0.9);
+}
+.parallax-container .section {
+  width: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+.card-panel.hoverable {
+  overflow: hidden;
+  position: relative;
+  transform-style: preserve-3d;
+  color: white;
+  height: 400px;
+}
+
+.card-panel-header {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%) scale(1.5);
+  transition: top 0.25s 0.1s, transform 0.25s ease 0.1s;
+}
+
+.card-panel-icon {
+  display: block;
+  text-align: center;
+}
+
+.card-panel-caption {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.card-panel-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.25s, opacity 0.8s;
+}
+
+.card-panel.hoverable:hover
+.card-panel-header{
+  transform: translateY(0) scale(1);
+  top: 0
+}
+.card-panel.hoverable:hover
+.card-panel-content{
+  transform: translateY(0);
+  opacity: 1
+}
