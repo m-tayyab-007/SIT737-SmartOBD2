@@ -1,11 +1,21 @@
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">Setting</a></li>
+    <li class="divider"></li>
+    <li><a href="/users/logout">Log Out</a></li>
+</ul>
+
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="index.html" class="brand-logo">Smart OBD2</a>
+        <a id="logo-container" href="/homepage" class="brand-logo">Smart OBD2</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/healthReport">Health Check</a></li>
             <li><a href="#">Trip Analysis</a></li>
-            <li><a href="#"><%= user.first_name %></a></li>
-            
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                    <%= user.first_name %><i class="material-icons right">arrow_drop_down</i>
+                </a></li>
+
         </ul>
     </div>
 </nav>
@@ -18,66 +28,124 @@
                 <li>
                     <div class="collapsible-header">
 
-                        <div class="progress blue lighten-4">
-                            <span>Progress<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style= "width:50%; animation: grow 2s";><%= user.car_health[0].iginition %>%</div>
+                        <div class="progress grean lighten-4">
+                            <span>Overall<i class="material-icons">info_outline</i></span>
+                            <div id="iginition" class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].overall %>%; animation: grow 2s" ;>
+                                <%= user.car_health[0].overall %>%
+                            </div>
                         </div>
 
                     </div>
-                    <div class="collapsible-body">This is information about the progress bar above. In our testing
-                        it
-                        was 50% awesome but this may not account for it's overall awesomeness which other estimates
-                        place at around 100%.<br>Source: A guy on the internet</div>
+                    <div class="collapsible-body">This bar shows the overall of the car health. This rate should over
+                        80% that shows your car is well, you do not need to repair or book a service.</div>
                 </li>
             </ul>
             <ul class="collapsible">
                 <li>
                     <div class="collapsible-header">
 
-                        <div class="progress blue lighten-4">
-                            <span>Length<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style="width: 75%; animation: grow 2s;"><%= user.car_health.fuel %>%</div>
+                        <div class="progress grean lighten-4">
+                            <span>Iginition System<i class="material-icons">info_outline</i></span>
+                            <div id="iginition" class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].iginition %>%; animation: grow 2s" ;>
+                                <%= user.car_health[0].iginition %>%
+                            </div>
                         </div>
 
                     </div>
-                    <div class="collapsible-body">This is information about the progress bar above. In our testing
-                        it
-                        was 75% awesome but this may not account for it's overall awesomeness which other estimates
-                        place at around 100%.<br>Source: A guy on the internet</div>
+                    <div class="collapsible-body">This is the iginition system part. In this part, the rate should over
+                        90%.</div>
                 </li>
             </ul>
             <ul class="collapsible">
                 <li>
                     <div class="collapsible-header">
 
-                        <div class="progress blue lighten-4">
-                            <span>Percentage<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style="width: 20%; animation: grow 2s;">20%</div>
+                        <div class="progress grean lighten-4">
+                            <span>Electrical System<i class="material-icons">info_outline</i></span>
+                            <div class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].electric %>%; animation: grow 2s;">
+                                <%= user.car_health[0].electric %>%
+                            </div>
                         </div>
 
                     </div>
-                    <div class="collapsible-body">This is information about the progress bar above. In our testing
-                        it
-                        was 75% awesome but this may not account for it's overall awesomeness which other estimates
-                        place at around 100%.<br>Source: A guy on the internet</div>
+                    <div class="collapsible-body">This is the Electrical system part. In this section, the safety range
+                        is between 80% to 100%. Below the 80%, please book a service to repair your electric system.
+                    </div>
                 </li>
             </ul>
             <ul class="collapsible">
                 <li>
                     <div class="collapsible-header">
 
-                        <div class="progress blue lighten-4">
-                            <span>Completion<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style="width: 65%; animation: grow 2s;">65%</div>
+                        <div class="progress grean lighten-4">
+                            <span>Coolant System<i class="material-icons">info_outline</i></span>
+                            <div class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].coolant %>%; animation: grow 2s;">
+                                <%= user.car_health[0].coolant %>%
+                            </div>
                         </div>
 
                     </div>
-                    <div class="collapsible-body">This is information about the progress bar above. In our testing
-                        it
-                        was 65% awesome but this may not account for it's overall awesomeness which other estimates
-                        place at around 100%.<br>Source: A guy on the internet</div>
+                    <div class="collapsible-body">This is the coolant system part. Your rate should over 60%. Otherwise,
+                        try to add coolant. If is still not work, please go the factory fix the system. </div>
                 </li>
             </ul>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+
+                        <div class="progress grean lighten-4">
+                            <span>Lubrication System<i class="material-icons">info_outline</i></span>
+                            <div class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].lubrication %>%; animation: grow 2s;">
+                                <%= user.car_health[0].lubrication %>%
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="collapsible-body">This is the Lubrication system. In this section, your rate should over
+                        80%.
+                    </div>
+                </li>
+            </ul>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+
+                        <div class="progress grean lighten-4">
+                            <span>Exhaust System<i class="material-icons">info_outline</i></span>
+                            <div class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].exhaust %>%; animation: grow 2s;">
+                                <%= user.car_health[0].exhaust %>%
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="collapsible-body">This is the Exhaust system. In this section, your rate should higher
+                        than 80%.</div>
+                </li>
+            </ul>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+
+                        <div class="progress grean lighten-4">
+                            <span>Fuel System<i class="material-icons">info_outline</i></span>
+                            <div class="determinate green accent-3"
+                                style="width: <%= user.car_health[0].fuel %>%; animation: grow 2s;">
+                                <%= user.car_health[0].fuel %>%
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="collapsible-body">This is the Fuel System. In this part, your rate should over 85%.
+                    </div>
+                </li>
+            </ul>
+
         </div>
     </div>
 </div>

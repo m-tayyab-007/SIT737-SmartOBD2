@@ -1,12 +1,20 @@
+<!-- Dropdown Structure -->
+<ul id="dropdown2" class="dropdown-content">
+    <li><a href="#!">Setting</a></li>
+    <li class="divider"></li>
+    <li><a href="/users/logout">Log Out</a></li>
+</ul>
+
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="index.html" class="brand-logo">Smart OBD2</a>
+        <a id="logo-container" href="/homepage" class="brand-logo">Smart OBD2</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/healthReport">Health Check</a></li>
             <li><a href="#">Trip Analysis</a></li>
-            <li><a href="#">
-                    <%= user.first_name %>
-                </a></li>
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">
+                <%= user.first_name %><i class="material-icons right">arrow_drop_down</i>
+            </a></li>
         </ul>
     </div>
 </nav>

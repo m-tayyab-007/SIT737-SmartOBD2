@@ -11,6 +11,9 @@ $(document).ready(function () {
   $(".collapsible").collapsible();
   //Materialize select
   $("select").formSelect();
+  //Materialize dropdown
+  $(".dropdown-trigger").dropdown();
+
   //Responsive select
   var Hilux = '<option value="Hilux">Hilux</option>';
   var Camry = '<option value="" disabled selected>Choose model</option> <option value="Camry">Camry</option>';
