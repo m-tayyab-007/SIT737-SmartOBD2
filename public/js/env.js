@@ -208,4 +208,8 @@ $(document).ready(function () {
   });
 
   displayModels();
+  // HealthCheck with specified OBD2 series code
+  
 });
+
+

@@ -19,7 +19,7 @@
     margin-left: 8px;
   }
   
-  #modded .progress.determinate {
+  #modded .progress .determinate {
     width: 0;
     transition: width 1s ease-in-out;
     padding: 8px;

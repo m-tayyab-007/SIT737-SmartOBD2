@@ -49,7 +49,7 @@ footer.page-footer {
   margin: 0;
 }
 
-.card-panel.hoverable {
+.card.hoverable {
   overflow: hidden;
   position: relative;
   transform-style: preserve-3d;
@@ -57,37 +57,53 @@ footer.page-footer {
   height: 400px;
 }
 
-.card-panel-header {
+.card-header {
   position: relative;
   top: 50%;
   transform: translateY(-50%) scale(1.5);
   transition: top 0.25s 0.1s, transform 0.25s ease 0.1s;
 }
 
-.card-panel-icon {
+.card-icon {
   display: block;
   text-align: center;
 }
 
-.card-panel-caption {
+.card-caption {
   display: block;
   text-align: center;
   font-size: 1rem;
 }
 
-.card-panel-content {
+.card-content {
   opacity: 0;
   transform: translateY(20px);
   transition: transform 0.25s, opacity 0.8s;
 }
 
-.card-panel.hoverable:hover
-.card-panel-header{
+.card.hoverable:hover
+.card-header{
   transform: translateY(0) scale(1);
   top: 0
 }
-.card-panel.hoverable:hover
-.card-panel-content{
+.card.hoverable:hover
+.card-content{
   transform: translateY(0);
   opacity: 1
+}
+.healthCheck{
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: url(/assets/healthCheck.jpg) no-repeat 0% 0%;
+  background-size: cover
+}
+.tripAnalysis{
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: url(/assets/tripPlan.jpg) no-repeat 0% 0%;
+  background-size: cover
 }
