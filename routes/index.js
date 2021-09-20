@@ -11,13 +11,15 @@ router.get("/register", (req, res) => {
 });
 //homepage
 router.get("/homepage", ensureAuthenticated, (req, res) => {
+  req.session.user = req.user;
   res.render("homepage", {
     user: req.user,
   });
 });
+// healthCheck
 router.get("/healthReport", ensureAuthenticated, (req, res) => {
   res.render("healthReport", {
-    user: req.user,
+    user: req.session.user,
   });
 });
 module.exports = router;

@@ -1,44 +1,48 @@
-    <nav class="white" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="index.html" class="brand-logo">Smart OBD2</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="/users/healthReport">Health Check</a></li>
-                <li><a href="#">Trip Analysis</a></li>
-                <li><a href="#"><%= user.first_name %></a></li>
-            </ul>
-        </div>
-    </nav>
-    <!-- Background 1 -->
-    <div id="index-banner" class="parallax-container">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <br><br><br>
-                <h1 class="header center yellow-text text-darken-4">Make Your Car Smart</h1>
-                <br><br>
-
-            </div>
-        </div>
-        <div class="parallax"><img src="/assets/background1.jpg" alt="Unsplashed background img 1"></div>
+<nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="index.html" class="brand-logo">Smart OBD2</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/healthReport">Health Check</a></li>
+            <li><a href="#">Trip Analysis</a></li>
+            <li><a href="#">
+                    <%= user.first_name %>
+                </a></li>
+        </ul>
     </div>
+</nav>
+<!-- Background 1 -->
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br><br>
+            <h1 class="header center yellow-text text-darken-4">Make Your Car Smart</h1>
+            <br><br>
 
-    <!-- Functionality cards -->
-    <div class="container">
-        <div class="row">
-            <div class="col s12">
-                <h5 class="center pink-text">
-                    Car registered: <span><i><%= user.car %></i></span>
-                </h5>
-            </div>
         </div>
-        <div class="section">
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <div class="card-panel hoverable red">
-                        <div class="card-panel-header">
-                            <span class="card-panel-icon"><i class="material-icons">build</i></span>
-                            <span class="card-panel-caption">Health Check</span>
+    </div>
+    <div class="parallax"><img src="/assets/background1.jpg" alt="Unsplashed background img 1"></div>
+</div>
+
+<!-- Functionality cards -->
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h3 class="center pink-text">
+                Car registered:
+            </h3>
+            <h5 class="center"><%= user.car %></h5>
+        </div>
+    </div>
+    <div class="section">
+        <div class="row">
+            <div class="col s12 m6 l6">
+                <div class="card hoverable">
+                    <div class="healthCheck">
+                        <div class="card-header">
+                            <span class="card-icon yellow-text text-accent-2"><i class="material-icons">build</i></span>
+                            <span class="card-caption yellow-text text-accent-2">Health Check</span>
                         </div>
-                        <div class="card-panel-content">
+                        <div class="card-content yellow-text text-accent-2">
                             <p>Health check will generate a comprehensive report based on the comparison between the
                                 latest recorded
                                 parameters of your car and the official parameters in our
@@ -47,19 +51,21 @@
                                 examination.
                             </p>
                             <div class="center">
-                                <a href="/users/healthReport" id="download-button"
+                                <a href="/healthReport" id="download-button"
                                     class="btn-large waves-effect waves-light teal lighten-1">Health Report</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l6">
-                    <div class="card-panel hoverable blue">
-                        <div class="card-panel-header">
-                            <span class="card-panel-icon"><i class="material-icons">rowing</i></span>
-                            <span class="card-panel-caption">Trip Analysis</span>
+            </div>
+            <div class="col s12 m6 l6">
+                <div class="card hoverable">
+                    <div class="tripAnalysis">
+                        <div class="card-header">
+                            <span class="card-icon deep-orange-text text-accent-4"><i class="material-icons">rowing</i></span>
+                            <span class="card-caption deep-orange-text text-accent-4">Trip Analysis</span>
                         </div>
-                        <p class="card-panel-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                        <p class="card-content deep-orange-text text-accent-4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                             commodo
                             ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
                             montes, nascetur
@@ -71,76 +77,77 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Background 2 -->
-    <div class="parallax-container">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <br><br><br><br>
-                <h1 class="header center blue-text text-lighten-4">Why choose us</h1>
-                <br><br>
-            </div>
+<!-- Background 2 -->
+<div class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br><br><br>
+            <h1 class="header center blue-text text-lighten-4">Why choose us</h1>
+            <br><br>
         </div>
-        <div class="parallax"><img src="/assets/background2.jpg" alt="Unsplashed background img 2"></div>
     </div>
-    <div class="container">
-        <div class="section">
+    <div class="parallax"><img src="/assets/background2.jpg" alt="Unsplashed background img 2"></div>
+</div>
+<div class="container">
+    <div class="section">
 
-            <!--  WHY CHOOSE US   -->
-            <div class="row">
-                <div class="col s12 m4">
-                    <div class="icon-block">
-                        <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
-                        <h5 class="center">Easy to use</h5>
+        <!--  WHY CHOOSE US   -->
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
+                    <h5 class="center">Easy to use</h5>
 
-                        <p class="light">We did a translation from the professional information of your car to a
-                            well-formed report
-                            that
-                            is understandable to general users. Just with a simple connection of the plug-in OBD2 and
-                            your smart
-                            phone, you
-                            can know about technical parameters of your car comprehensively like that your are an
-                            expert.</p>
-                    </div>
-                </div>
-
-                <div class="col s12 m4">
-                    <div class="icon-block">
-                        <h2 class="center brown-text"><i class="material-icons">group</i></h2>
-                        <h5 class="center">User Experience Focused</h5>
-
-                        <p class="light">It is not just an application presenting passive and static information. It's
-                            more about a
-                            kind of
-                            artificial intelligence that provides customer-centred services. We are planing to produce a
-                            series
-                            services that
-                            would simplify people's life with the conveniences provided such as health check, trip
-                            analysis, driving
-                            behaviour monitor
-                            , and more in the developing.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col s12 m4">
-                    <div class="icon-block">
-                        <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
-                        <h5 class="center">Powerful usability</h5>
-
-                        <p class="light">We are trying to optimize our database for different car models as many as we
-                            can. This is
-                            an application not
-                            just serving for one or several brands but aiming on all cars that are still used today.
-                            Also enhanced by
-                            Google Map at this
-                            moment, we are developing more functionalities by collaborating with more third-party
-                            companies.
-                        </p>
-                    </div>
+                    <p class="light">We did a translation from the professional information of your car to a
+                        well-formed report
+                        that
+                        is understandable to general users. Just with a simple connection of the plug-in OBD2 and
+                        your smart
+                        phone, you
+                        can know about technical parameters of your car comprehensively like that your are an
+                        expert.</p>
                 </div>
             </div>
 
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+                    <h5 class="center">User Experience Focused</h5>
+
+                    <p class="light">It is not just an application presenting passive and static information. It's
+                        more about a
+                        kind of
+                        artificial intelligence that provides customer-centred services. We are planing to produce a
+                        series
+                        services that
+                        would simplify people's life with the conveniences provided such as health check, trip
+                        analysis, driving
+                        behaviour monitor
+                        , and more in the developing.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+                    <h5 class="center">Powerful usability</h5>
+
+                    <p class="light">We are trying to optimize our database for different car models as many as we
+                        can. This is
+                        an application not
+                        just serving for one or several brands but aiming on all cars that are still used today.
+                        Also enhanced by
+                        Google Map at this
+                        moment, we are developing more functionalities by collaborating with more third-party
+                        companies.
+                    </p>
+                </div>
+            </div>
         </div>
+
     </div>
-    <a href="/users/logout">Logout</a>
+</div>
+<a href="/users/logout">Logout</a>

@@ -111,12 +111,49 @@ router.post("/register", (req, res) => {
               engine,
             });
           } else {
+            function healthCheck(code) {
+              switch (code) {
+                case "SMART-OBD2-19012021-001":
+                var proportions = {
+                    iginition: 99,
+                    electric: 98,
+                    coolant: 92,
+                    lubrication: 95,
+                    exhaust: 94,
+                    fuel: 92,
+                    overall: 95,
+                  };
+                  break;
+                case "SMART-OBD2-19012021-002":
+                  var proportions = {
+                    iginition: 99,
+                    electric: 98,
+                    coolant: 92,
+                    lubrication: 95,
+                    exhaust: 94,
+                    fuel: 92,
+                    overall: 95,
+                  };
+                case "SMART-OBD2-21012021-010":
+                  var proportions = {
+                    iginition: 99,
+                    electric: 98,
+                    coolant: 92,
+                    lubrication: 95,
+                    exhaust: 94,
+                    fuel: 92,
+                    overall: 94,
+                  };
+              }
+              return proportions;
+            }
             const newUser = new User({
               code: code,
               first_name: first_name,
               email: email,
               password: password,
               car: [brand, model, year, series, engine],
+              car_health: healthCheck(code),
             });
 
             //hash password
@@ -148,10 +185,6 @@ router.post("/login", (req, res, next) => {
     failureRedirect: "/users/login",
     failureFlash: true,
   })(req, res, next);
-});
-// healthCheck
-router.get("/healthReport", (req, res) => {
-  res.render("healthReport");
 });
 //logout
 router.get("/logout", (req, res) => {

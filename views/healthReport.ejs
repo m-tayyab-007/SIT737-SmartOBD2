@@ -2,9 +2,10 @@
     <div class="nav-wrapper container">
         <a id="logo-container" href="index.html" class="brand-logo">Smart OBD2</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/users/healthReport">Health Check</a></li>
+            <li><a href="/healthReport">Health Check</a></li>
             <li><a href="#">Trip Analysis</a></li>
             <li><a href="#"><%= user.first_name %></a></li>
+            
         </ul>
     </div>
 </nav>
@@ -19,7 +20,7 @@
 
                         <div class="progress blue lighten-4">
                             <span>Progress<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style="width: 50%; animation: grow 2s;">50%</div>
+                            <div class="determinate blue" style= "width:50%; animation: grow 2s";><%= user.car_health[0].iginition %>%</div>
                         </div>
 
                     </div>
@@ -35,7 +36,7 @@
 
                         <div class="progress blue lighten-4">
                             <span>Length<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style="width: 75%; animation: grow 2s;">75%</div>
+                            <div class="determinate blue" style="width: 75%; animation: grow 2s;"><%= user.car_health.fuel %>%</div>
                         </div>
 
                     </div>
