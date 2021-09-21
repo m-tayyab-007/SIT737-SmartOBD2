@@ -11,12 +11,13 @@ router.get("/register", (req, res) => {
 });
 //homepage
 router.get("/homepage", ensureAuthenticated, (req, res) => {
+// collect current session used for the following pages
   req.session.user = req.user;
   res.render("homepage", {
     user: req.user,
   });
 });
-// healthCheck
+//healthCheck
 router.get("/healthReport", ensureAuthenticated, (req, res) => {
   res.render("healthReport", {
     user: req.session.user,

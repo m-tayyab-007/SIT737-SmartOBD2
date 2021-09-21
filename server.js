@@ -33,7 +33,9 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+// port
 var port = process.env.PORT || 8080;
+//express linking public folder
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 //Routes

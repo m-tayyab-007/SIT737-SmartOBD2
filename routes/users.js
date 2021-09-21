@@ -74,7 +74,7 @@ router.post("/register", (req, res) => {
       engine: engine,
     });
   } else {
-    //validation passed
+    //check if OBD2 series code is registered
     User.findOne({ code: code }).exec((err, user) => {
       console.log(user);
       if (user) {
@@ -93,6 +93,7 @@ router.post("/register", (req, res) => {
           engine,
         });
       } else {
+        //check if email is registered
         User.findOne({ email: email }).exec((err, user) => {
           console.log(user);
           if (user) {
@@ -111,6 +112,7 @@ router.post("/register", (req, res) => {
               engine,
             });
           } else {
+            //get the health information based on OBD2 device code registered
             function healthCheck(code) {
               switch (code) {
                 case "SMART-OBD2-19012021-001":
@@ -147,6 +149,7 @@ router.post("/register", (req, res) => {
               }
               return proportions;
             }
+            //new user created
             const newUser = new User({
               code: code,
               first_name: first_name,
@@ -179,6 +182,7 @@ router.post("/register", (req, res) => {
     });
   }
 });
+//login
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/homepage",
