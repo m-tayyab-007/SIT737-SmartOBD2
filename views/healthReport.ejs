@@ -36,7 +36,7 @@
 
                         <div class="progress blue lighten-4">
                             <span>Length<i class="material-icons">info_outline</i></span>
-                            <div class="determinate blue" style="width: 75%; animation: grow 2s;"><%= user.car_health.fuel %>%</div>
+                            <div class="determinate blue" style="width: <%= user.car_health[0].fuel %>%; animation: grow 2s;"><%= user.car_health[0].fuel %>%</div>
                         </div>
 
                     </div>
