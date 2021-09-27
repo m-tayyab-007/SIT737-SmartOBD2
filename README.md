@@ -22,5 +22,5 @@ The open source license for this project; in this project, it's licensed under M
 
 ## package.jason
 
-    We identify our node package dependencies during npm install.
+We identify our node package dependencies during npm install.
 
