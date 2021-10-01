@@ -191,7 +191,7 @@ const uploadUser = (uploadings) => {
     contentType: "application/json",
     type: "POST",
     success: function () {
-      window.location.href = '../../api/users';
+      window.location.href = "../../api/users";
     },
   });
 };
@@ -222,6 +222,26 @@ const newUser = () => {
   uploadUser(rUser);
 };
 //
+const updateData = (data) =>{
+  $("#from").text(data.from);
+}
+// 
+const requestUploading = () => {
+  $.get("/api/data", (drivingData) => {
+    if (drivingData.length > 0) {
+      var newestData = drivingData[drivingData.length - 1];
+      console.log(newestData.from);
+      updateData(newestData);
+    }
+  });
+};
+
+const repeatRequest = () => {
+  setInterval(function () {
+    requestUploading();
+    //this code runs every second
+  }, 500);
+};
 $(document).ready(function () {
   console.log("Ready");
   // modal JQuery
@@ -253,4 +273,8 @@ $(document).ready(function () {
 
   displayModels();
   // HealthCheck with specified OBD2 series code
+  // setTimeout(() => {
+  //   requestUploading();
+  // }, 2000);
+  repeatRequest();
 });
