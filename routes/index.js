@@ -38,6 +38,12 @@ router.get("/healthReport", ensureAuthenticated, (req, res) => {
     user: req.session.user,
   });
 });
+// tripAnalysis
+router.get("/tripAnalysis", ensureAuthenticated, (req, res) => {
+  res.render("tripAnalysis", {
+    user: req.session.user,
+  });
+});
 // driving monitor
 router.get("/monitor", ensureAuthenticated, (req, res) => {
   res.render("monitor", {
