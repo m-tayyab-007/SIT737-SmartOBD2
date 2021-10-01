@@ -1,18 +1,23 @@
 const express = require("express");
 const router = express.Router();
+const routerIndex = require("../routes/index").router;
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
-const { model } = require("mongoose");
+let db = require("../dbConnect");
+let usersCollection;
+setTimeout(() => {
+  usersCollection = db.dbConnect.client.db().collection("users");
+}, 500);
+// let dbConnect = db.dbConnect;
 //login handle
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-router.get("/register", (req, res) => {
-  res.render("register");
-});
+// router.get("/login", (req, res) => {
+//   res.render("login");
+// });
+let render = false,
+  renderObject,
+  redirect = false;
 //Register handle
-router.post("/register", (req, res) => {
+router.post("/", (req, res) => {
   const {
     code,
     first_name,
@@ -26,6 +31,19 @@ router.post("/register", (req, res) => {
     engine,
   } = req.body;
   let errors = [];
+  renderObject = {
+    errors,
+    code,
+    first_name,
+    email,
+    password,
+    password2,
+    brand,
+    model,
+    year,
+    series,
+    engine,
+  };
   console.log(
     " OBD2 code :" +
       code +
@@ -60,6 +78,9 @@ router.post("/register", (req, res) => {
     errors.push({ msg: "password atleast 6 characters" });
   }
   if (errors.length > 0) {
+    renderObject.errors = errors;
+    render = true;
+    console.log("many registered errors");
     res.render("register", {
       errors: errors,
       code: code,
@@ -73,12 +94,42 @@ router.post("/register", (req, res) => {
       series: series,
       engine: engine,
     });
+    // res.redirect("/register");
+    // res.render("register", {
+    //   errors: errors,
+    //   code: code,
+    //   first_name: first_name,
+    //   email: email,
+    //   password: password,
+    //   password2: password2,
+    //   brand: brand,
+    //   model: model,
+    //   year: year,
+    //   series: series,
+    //   engine: engine,
+    // });
+    // res.render("register", {
+    //   errors: errors,
+    //   code: code,
+    //   first_name: first_name,
+    //   email: email,
+    //   password: password,
+    //   password2: password2,
+    //   brand: brand,
+    //   model: model,
+    //   year: year,
+    //   series: series,
+    //   engine: engine,
+    // });
   } else {
     //check if OBD2 series code is registered
     User.findOne({ code: code }).exec((err, user) => {
       console.log(user);
       if (user) {
         errors.push({ msg: "OBD2 code already registered" });
+        console.log("OBD2 code already registered");
+        renderObject.errors = errors;
+        render = true;
         res.render("register", {
           errors,
           code,
@@ -98,6 +149,9 @@ router.post("/register", (req, res) => {
           console.log(user);
           if (user) {
             errors.push({ msg: "email already registered" });
+            console.log("email already registered");
+            renderObject.errors = errors;
+            render = true;
             res.render("register", {
               errors,
               code,
@@ -116,7 +170,7 @@ router.post("/register", (req, res) => {
             function healthCheck(code) {
               switch (code) {
                 case "SMART-OBD2-19012021-001":
-                var proportions = {
+                  var proportions = {
                     iginition: 99,
                     electric: 98,
                     coolant: 92,
@@ -170,8 +224,9 @@ router.post("/register", (req, res) => {
                   .save()
                   .then((value) => {
                     console.log(value);
+                    redirect = true;
                     req.flash("success_msg", "You have now registered!");
-                    res.redirect("/users/login");
+                    res.redirect("/");
                   })
                   .catch((value) => console.log(value));
               })
@@ -183,17 +238,45 @@ router.post("/register", (req, res) => {
   }
 });
 //login
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/homepage",
-    failureRedirect: "/users/login",
-    failureFlash: true,
-  })(req, res, next);
-});
+// router.post("/login", (req, res, next) => {
+//   passport.authenticate("local", {
+//     successRedirect: "/homepage",
+//     failureRedirect: "/users/login",
+//     failureFlash: true,
+//   })(req, res, next);
+// });
 //logout
-router.get("/logout", (req, res) => {
-  req.logout();
-  req.flash("success_msg", "Now logged out");
-  res.redirect("/users/login");
+// router.get("/logout", (req, res) => {
+//   req.logout();
+//   req.flash("success_msg", "Now logged out");
+//   res.redirect("/login");
+// });
+router.get("/", (req, res) => {
+  if (render) {
+    res.render("register", {
+      errors: renderObject.errors,
+      first_name: renderObject.first_name,
+      email: renderObject.email,
+      password: renderObject.password,
+      password2: renderObject.password2,
+      brand: renderObject.brand,
+      model: renderObject.model,
+      year: renderObject.year,
+      series: renderObject.series,
+      engine: renderObject.engine,
+    });
+    render = false;
+  } else if (redirect) {
+    req.flash("success_msg", "You have now registered!");
+    res.redirect("/");
+    redirect = false;
+  } else {
+    usersCollection.find().toArray(function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.send(result);
+    });
+  }
 });
-module.exports = router;
+exports.router = router;
+// module.exports = router;

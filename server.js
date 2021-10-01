@@ -6,6 +6,9 @@ const expressEjsLayout = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+const defaultRoute = require("./routes");
+const userRoute = require("./routes/users");
+const dataRoute = require("./routes/sensor");
 //passport config
 require("./config/passport")(passport);
 let http = require('http').createServer(app);
@@ -39,8 +42,9 @@ var port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 //Routes
-app.use("/", require("./routes"));
-app.use("/users", require("./routes/users"));
+app.use("/", defaultRoute.router);
+app.use("/api/users", userRoute.router);
+app.use("/api/data", dataRoute.router);
 
 http.listen(port,()=>{
     console.log("Listening on port ", port);

@@ -1,109 +1,112 @@
 <div class="row">
     <img src="/assets/background.jpg" alt="backgroundImage" class="responsive-img" style="width:100%;">
 </div>
-    <div class="loginSign_up">
-        <h1>Register</h1>
-        <div id="login-page" class="row">
-            <div class="col s12 z-depth-6 card-panel">
-                <form action="/users/register" method="POST">
-                    <div class="row">
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">devices</i>
-                            <select name="code">
-                                <option value="" disabled selected>Choose your OBD2 series code</option>
-                                <option value="SMART-OBD2-19012021-001">SMART-OBD2-19012021-001</option>
-                                <option value="SMART-OBD2-19012021-002">SMART-OBD2-19012021-002</option>
-                                <option value="SMART-OBD2-21012021-010">SMART-OBD2-21012021-010</option>
-                            </select>
-                            <label>OBD2 Code</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">assignment_ind</i>
-                            <label class="active" for="first_name">First Name</label>
-                            <input type="text" name="first_name"
-                                value="<%= typeof first_name != 'undefined' ? first_name : '' %>">
-                        </div>
-                        <div class="input-field col s6">
-                            <input name="last_name" type="text" class="validate">
-                            <label for="last_name">Last Name</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">mail_outline</i>
-                            <label for="email">Email Address</label>
-                            <input type="email" name="email" value="<%= typeof email != 'undefined' ? email : '' %>">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">lock_outline</i>
-                            <label for="password">Password</label>
-                            <input type="password" name="password"
-                                value="<%= typeof password != 'undefined' ? password : '' %>">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">lock_outline</i>
-                            <label for="password2">Confirm Password</label>
-                            <input type="password" name="password2"
-                                value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">directions_car</i>
-                            <select id="brands_choices" name="brand">
-                                <option value="" disabled selected>Choose your car brand</option>
-                                <option value="Toyota">Toyota</option>
-                                <option value="Nissan">Nissan</option>
-                            </select>
-                            <label>Brand</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">directions_car</i>
-                            <select id="models_choices" name="model" disabled>
-                            </select>
-                            <label>Model</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">directions_car</i>
-                            <select id="years_choices" name="year" disabled>
-                            </select>
-                            <label>Year</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">directions_car</i>
-                            <select id="serieses_choices" name="series" disabled>
-                            </select>
-                            <label>Series</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">directions_car</i>
-                            <select id="engines_choices" name="engine" disabled>
-                            </select>
-                            <label>Engine</label>
-                        </div>
-                    </div>
-                    <p class="center red-text text-darken-4"><%- include ('./partials/messages') %></p>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <button type="submit" class="login-btn btn waves-effect waves-light col s12">
-                                Sign up
-                            </button>
-                        </div>
-                    </div>
-                </form>
+<div class="loginSign_up">
+    <h1>Register</h1>
+    <div id="login-page" class="row">
+        <div class="col s12 z-depth-6 card-panel">
+            <!-- <form> -->
+            <div class="row">
             </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">devices</i>
+                    <select name="code" id="rCode">
+                        <option value="" disabled selected>Choose your OBD2 series code</option>
+                        <option value="SMART-OBD2-19012021-001">SMART-OBD2-19012021-001</option>
+                        <option value="SMART-OBD2-19012021-002">SMART-OBD2-19012021-002</option>
+                        <option value="SMART-OBD2-21012021-010">SMART-OBD2-21012021-010</option>
+                    </select>
+                    <label>OBD2 Code</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">assignment_ind</i>
+                    <label class="active" for="first_name">First Name</label>
+                    <input type="text" name="first_name" id="rFirst_name"
+                        value="<%= typeof first_name != 'undefined' ? first_name : '' %>">
+                </div>
+                <div class="input-field col s6">
+                    <input name="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">mail_outline</i>
+                    <label for="email">Email Address</label>
+                    <input type="email" name="email" id="rEmail"
+                        value="<%= typeof email != 'undefined' ? email : '' %>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock_outline</i>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="rPassword"
+                        value="<%= typeof password != 'undefined' ? password : '' %>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock_outline</i>
+                    <label for="password2">Confirm Password</label>
+                    <input type="password" name="password2" id="rPassword2"
+                        value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="brands_choices" name="brand">
+                        <option value="" disabled selected>Choose your car brand</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Nissan">Nissan</option>
+                    </select>
+                    <label>Brand</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="models_choices" name="model" disabled>
+                    </select>
+                    <label>Model</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="years_choices" name="year" disabled>
+                    </select>
+                    <label>Year</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="serieses_choices" name="series" disabled>
+                    </select>
+                    <label>Series</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="engines_choices" name="engine" disabled>
+                    </select>
+                    <label>Engine</label>
+                </div>
+            </div>
+            <p class="center red-text text-darken-4">
+                <%- include ('./partials/messages') %>
+            </p>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button onclick="newUser()" class="btn waves-effect waves-light col s12">
+                        Sign up
+                    </button>
+                </div>
+            </div>
+            <!-- </form> -->
         </div>
-        <p>Have An Account? <a href="/users/login">Login</a></p>
     </div>
+    <p>Have An Account? <a href="/">Login</a></p>
+</div>
