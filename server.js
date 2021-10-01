@@ -45,3 +45,5 @@ app.use("/users", require("./routes/users"));
 http.listen(port,()=>{
     console.log("Listening on port ", port);
   });
+
+module.exports = app
