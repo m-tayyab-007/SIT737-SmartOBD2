@@ -3,7 +3,16 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const { model } = require("mongoose");
+
+
+
+
+// let db = require("../dbConnect");
+// let dataCollection;
+// setTimeout(() => {
+//   dataCollection = db.dbConnect.client.db().collection("simulate");
+// }, 500);
+
 //login handle
 router.get("/login", (req, res) => {
   res.render("login");
@@ -11,6 +20,10 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
+
+
+
+
 //Register handle
 router.post("/register", (req, res) => {
   const {

@@ -8,4 +8,4 @@ mongoose
   .then(() => console.log("database connected"))
   .catch((err) => console.log(err));
   
-  exports.mongoose = mongoose;
+exports.mongoose = mongoose;
