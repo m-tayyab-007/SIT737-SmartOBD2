@@ -10,7 +10,7 @@ setTimeout(() => {
 router.get("/", (req, res) => {
   dataCollection.find().toArray(function (err, result) {
     if (err) throw err;
-    console.log(result);
+    // console.log(1);
     res.send(result);
   });
 });
