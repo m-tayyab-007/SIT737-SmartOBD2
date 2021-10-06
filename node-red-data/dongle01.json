@@ -1,0 +1,677 @@
+[
+    {
+        "id": "458782f98915e034",
+        "type": "tab",
+        "label": "Dongle-01",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b4372dc3197a84c0",
+        "type": "mongodb out",
+        "z": "458782f98915e034",
+        "mongodb": "30759c261cddce0a",
+        "name": "mongoDB",
+        "collection": "simulate",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 660,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1eb310307206197b",
+        "type": "function",
+        "z": "458782f98915e034",
+        "name": "All data",
+        "func": "min1 = msg.temprature.min1;\nmax1 = msg.temprature.max1;\nmin2 = msg.fuel.min2;\nmax2 = msg.fuel.max2;\nmin3 = msg.speed.min3;\nmax3 = msg.speed.max3;\nmin4 = msg.brake.min4;\nmax4 = msg.brake.max4;\nmin5 = msg.time.min5;\nmax5 = msg.time.max5;\ndistance = msg.distance\nfrom = msg.from\nto = msg.to\nurl = msg.url\ntimestamp = msg.timestamp\ndongle = msg.dongle\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\nreturn {fuel: generateRandomIntegerInRange(min2, max2),\n    temprature: generateRandomIntegerInRange(min1, max1),\n    speed: generateRandomIntegerInRange(min3, max3),\n    brake: generateRandomIntegerInRange(min4, max4),\n    time: generateRandomIntegerInRange(min5, max5),\n    distance,from,to,url,timestamp,dongle\n};\n \n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "c1b241555456e8b1",
+                "b4372dc3197a84c0"
+            ]
+        ]
+    },
+    {
+        "id": "5a17faa34926c7fb",
+        "type": "inject",
+        "z": "458782f98915e034",
+        "name": "Trip 01",
+        "props": [
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "temprature",
+                "v": "{\"min1\":195,\"max1\":220}",
+                "vt": "json"
+            },
+            {
+                "p": "fuel",
+                "v": "{\"min2\":8,\"max2\":12}",
+                "vt": "json"
+            },
+            {
+                "p": "speed",
+                "v": "{\"min3\":30,\"max3\":60}",
+                "vt": "json"
+            },
+            {
+                "p": "brake",
+                "v": "{\"min4\":55,\"max4\":80}",
+                "vt": "json"
+            },
+            {
+                "p": "time",
+                "v": "{\"min5\":15,\"max5\":20}",
+                "vt": "json"
+            },
+            {
+                "p": "from",
+                "v": "Clayton",
+                "vt": "str"
+            },
+            {
+                "p": "to",
+                "v": "Caulfield",
+                "vt": "str"
+            },
+            {
+                "p": "url",
+                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d50373.01806998863!2d145.0423940634514!3d-37.8997313578997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x6ad66ad657aee985%3A0x5045675218cddc0!2sClayton%20VIC!3m2!1d-37.914547899999995!2d145.127492!4m5!1s0x6ad6696cd1a408d7%3A0x5045675218cf900!2sCaulfield%20VIC!3m2!1d-37.884!2d145.0266!5e0!3m2!1sen!2sau!4v1632734061641!5m2!1sen!2sau",
+                "vt": "str"
+            },
+            {
+                "p": "distance",
+                "v": "12",
+                "vt": "num"
+            },
+            {
+                "p": "dongle",
+                "v": "OBD001",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 80,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c1b241555456e8b1",
+        "type": "debug",
+        "z": "458782f98915e034",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "dongle",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "d0baccf6cc5b7c88",
+        "type": "function",
+        "z": "458782f98915e034",
+        "name": "Temprature",
+        "func": "min1 = msg.temprature.min1;\nmax1 = msg.temprature.max1;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min1, max1)\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 340,
+        "wires": [
+            [
+                "1742fea6df04c0ca",
+                "3c41c06c52bc60c3"
+            ]
+        ]
+    },
+    {
+        "id": "bba967a0b8ecac62",
+        "type": "function",
+        "z": "458782f98915e034",
+        "name": "fuel",
+        "func": "var min2 = msg.fuel.min2\nvar max2 = msg.fuel.max2\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min;\n}\n\n\n\nreturn {payload: generateRandomIntegerInRange(min2, max2)};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "dc76ba7461ae365e",
+                "c7119330d27fb7c8"
+            ]
+        ]
+    },
+    {
+        "id": "7e1432f0dd78722a",
+        "type": "function",
+        "z": "458782f98915e034",
+        "name": "speed",
+        "func": "min3 = msg.speed.min3;\nmax3 = msg.speed.max3;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min3, max3)\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "6614a452f02b4430",
+                "b2da9186465bb2d3"
+            ]
+        ]
+    },
+    {
+        "id": "1742fea6df04c0ca",
+        "type": "ui_gauge",
+        "z": "458782f98915e034",
+        "name": "",
+        "group": "5d81a0460650e608",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "temprature",
+        "label": "celcius",
+        "format": "{{value}}",
+        "min": "190",
+        "max": "230",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "210",
+        "seg2": "220",
+        "className": "",
+        "x": 670,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "3c41c06c52bc60c3",
+        "type": "ui_chart",
+        "z": "458782f98915e034",
+        "name": "",
+        "group": "5d81a0460650e608",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "temprature-chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "50",
+        "ymax": "250",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 680,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc76ba7461ae365e",
+        "type": "ui_gauge",
+        "z": "458782f98915e034",
+        "name": "",
+        "group": "daa210e7c206b8b6",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "fuel",
+        "label": "L",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "20",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "10",
+        "seg2": "15",
+        "className": "",
+        "x": 650,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c7119330d27fb7c8",
+        "type": "ui_chart",
+        "z": "458782f98915e034",
+        "name": "",
+        "group": "daa210e7c206b8b6",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "fuel-chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 660,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6614a452f02b4430",
+        "type": "ui_gauge",
+        "z": "458782f98915e034",
+        "name": "",
+        "group": "e4c0d2431fe7285c",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Speed",
+        "label": "km/h",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "55",
+        "seg2": "59",
+        "className": "",
+        "x": 650,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "b2da9186465bb2d3",
+        "type": "ui_chart",
+        "z": "458782f98915e034",
+        "name": "",
+        "group": "e4c0d2431fe7285c",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "speed-chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "150",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 670,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f4f754eb19ff1f9a",
+        "type": "ui_switch",
+        "z": "458782f98915e034",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "f4dd05d18cf281f0",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "control",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "open",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "close",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 90,
+        "y": 440,
+        "wires": [
+            [
+                "ba04aebfaaa724dd"
+            ]
+        ]
+    },
+    {
+        "id": "ba04aebfaaa724dd",
+        "type": "gate",
+        "z": "458782f98915e034",
+        "name": "",
+        "controlTopic": "control",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memory",
+        "x": 230,
+        "y": 300,
+        "wires": [
+            [
+                "d0baccf6cc5b7c88",
+                "bba967a0b8ecac62",
+                "7e1432f0dd78722a",
+                "1eb310307206197b"
+            ]
+        ]
+    },
+    {
+        "id": "cee5a431ae6d1b6c",
+        "type": "inject",
+        "z": "458782f98915e034",
+        "name": "Trip 02",
+        "props": [
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "temprature",
+                "v": "{\"min1\":195,\"max1\":220}",
+                "vt": "json"
+            },
+            {
+                "p": "fuel",
+                "v": "{\"min2\":8,\"max2\":12}",
+                "vt": "json"
+            },
+            {
+                "p": "speed",
+                "v": "{\"min3\":30,\"max3\":60}",
+                "vt": "json"
+            },
+            {
+                "p": "brake",
+                "v": "{\"min4\":55,\"max4\":80}",
+                "vt": "json"
+            },
+            {
+                "p": "time",
+                "v": "{\"min5\":16,\"max5\":22}",
+                "vt": "json"
+            },
+            {
+                "p": "from",
+                "v": "Box Hill",
+                "vt": "str"
+            },
+            {
+                "p": "to",
+                "v": "Glen Waverley",
+                "vt": "str"
+            },
+            {
+                "p": "url",
+                "v": "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50409.23680424637!2d145.10785810808204!3d-37.84678046494939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sau!4v1633132289165!5m2!1sen!2sau",
+                "vt": "str"
+            },
+            {
+                "p": "distance",
+                "v": "11",
+                "vt": "num"
+            },
+            {
+                "p": "dongle",
+                "v": "OBD001",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e15bac2b20df52bc",
+        "type": "inject",
+        "z": "458782f98915e034",
+        "name": "trip 03",
+        "props": [
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "temprature",
+                "v": "{\"min1\":195,\"max1\":220}",
+                "vt": "json"
+            },
+            {
+                "p": "fuel",
+                "v": "{\"min2\":8,\"max2\":12}",
+                "vt": "json"
+            },
+            {
+                "p": "speed",
+                "v": "{\"min3\":30,\"max3\":60}",
+                "vt": "json"
+            },
+            {
+                "p": "brake",
+                "v": "{\"min4\":55,\"max4\":80}",
+                "vt": "json"
+            },
+            {
+                "p": "time",
+                "v": "{\"min5\":16,\"max5\":22}",
+                "vt": "json"
+            },
+            {
+                "p": "from",
+                "v": "Wheelers Hill",
+                "vt": "str"
+            },
+            {
+                "p": "to",
+                "v": "Deakin Uni Burwood",
+                "vt": "str"
+            },
+            {
+                "p": "url",
+                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d50384.24180369886!2d145.11489795831972!3d-37.88332926326676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad63e2af5985a7f%3A0x5045675218cdd10!2sWheelers%20Hill%20VIC!3m2!1d-37.906787099999995!2d145.1890123!4m5!1s0x6ad64183ed66f32b%3A0x5b6ab28116eedd1c!2sDeakin%20University%2C%20Building%20LA%2C%2070%2C%20Elgar%20Rd%2C%20Burwood%20VIC%203125!3m2!1d-37.8447032!2d145.1107462!5e0!3m2!1sen!2sau!4v1633133051079!5m2!1sen!2sau",
+                "vt": "str"
+            },
+            {
+                "p": "distance",
+                "v": "14",
+                "vt": "num"
+            },
+            {
+                "p": "dongle",
+                "v": "OBD001",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 140,
+        "y": 20,
+        "wires": [
+            [
+                "ba04aebfaaa724dd"
+            ]
+        ]
+    },
+    {
+        "id": "30759c261cddce0a",
+        "type": "mongodb",
+        "hostname": "sit725-2021-t2-week4.9iugr.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "obd2",
+        "name": ""
+    },
+    {
+        "id": "5d81a0460650e608",
+        "type": "ui_group",
+        "name": "temprature",
+        "tab": "ce8a760e58215cf0",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "daa210e7c206b8b6",
+        "type": "ui_group",
+        "name": "fuel",
+        "tab": "ce8a760e58215cf0",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e4c0d2431fe7285c",
+        "type": "ui_group",
+        "name": "speed",
+        "tab": "ce8a760e58215cf0",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f4dd05d18cf281f0",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "ce8a760e58215cf0",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ce8a760e58215cf0",
+        "type": "ui_tab",
+        "name": "home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
