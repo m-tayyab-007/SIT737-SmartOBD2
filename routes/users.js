@@ -167,6 +167,8 @@ router.post("/", (req, res) => {
             });
           } else {
             //get the health information based on OBD2 device code registered
+            
+
             function healthCheck(code) {
               switch (code) {
                 case "SMART-OBD2-19012021-001":
