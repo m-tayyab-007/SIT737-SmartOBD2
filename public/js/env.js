@@ -222,19 +222,68 @@ const newUser = () => {
   uploadUser(rUser);
 };
 //
-const updateData = (data) =>{
-  $("#from").text(data.from);
-}
-// 
-const requestUploading = () => {
-  $.get("/api/data", (drivingData) => {
-    if (drivingData.length > 0) {
-      var newestData = drivingData[drivingData.length - 1];
-      console.log(newestData.from);
-      updateData(newestData);
-    }
-  });
+
+let showTrip = () =>{
+
 };
+
+const requestUploading = () => {
+  console.log('run');
+  $.get("/api/data", (drivingData) => {
+    let x = [];
+    let tripdata = [];
+    console.log('run2');
+    for (let i = 0; i < drivingData.length; i++) {
+      if (i >= 1) {
+        let newestData = drivingData[i];
+        let lastData = drivingData[i - 1];
+        if (newestData.timestamp - lastData.timestamp >= 10000) {
+          // let trip = [lastData.from, lastData.timestamp, lastData.to, lastData.time, lastData.fuel, lastData.distance, lastData.url];
+          // updateData(trip);
+          x.push(i);
+        }
+      }
+    }
+    console.log('success');
+    for (let i = 0; i < x.length + 1; i++) {
+      if (i < x.length) {
+        if (i = 0) {
+          tripdata.push(drivingData.slice(0, x[i]));
+        }
+        else {
+          tripdata.push(drivingData.slice(x[i - 1], x[i]));
+        }
+      }
+      else {
+        tripdata.push(drivingData.slice(x[i - 1], drivingData.length - 1));
+      }
+    }
+    console.log(tripdata);
+    // updateData(tripdata);
+
+    let tripNumber = tripdata.length;
+    for(i = 1; i < tripNumber + 1; i++){
+
+      let item= 
+      '<div class="col s4 m3 l2">' +
+      '<button onclick="showTrip('+(i-1)+')" class="btn waves-effect waves-light col s12">trip'+i+'</button>'+
+      '</div>'
+      $('#listSubmissions').append(item)
+
+    }
+      showTrip = (index) => {
+      let trip = tripdata[index];
+      $("#from").text(trip[trip.length-1].from);
+      $("#to").text(trip[trip.length-1].to);
+      $("#mapurl").attr("src",trip[trip.length-1].url);
+      $("#time").text(trip[trip.length-1].time);
+      $("#fuel").text(trip.fuel);
+      $("#distance").text(trip[trip.length-1].distance);
+    }
+
+  })
+};
+
 
 const repeatRequest = () => {
   setInterval(function () {
@@ -274,7 +323,7 @@ $(document).ready(function () {
   displayModels();
   // HealthCheck with specified OBD2 series code
   // setTimeout(() => {
-  //   requestUploading();
+  requestUploading();
   // }, 2000);
-  repeatRequest();
+  // repeatRequest();
 });

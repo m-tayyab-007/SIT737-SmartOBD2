@@ -20,16 +20,23 @@
     </div>
 </nav>
 
+
 <div>
     <div class="tripAnalysis">
         <h1 class="center" style="color: coral;">Trip Analysis</h1>
     </div>
     <div class="container">
         <div class="row">
+            <div id="listSubmissions">
+
+            </div>
+            
+        </div>
+        <div class="row">
             <!-- google map embed -->
             <div class="col s12 center">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d50373.01806998863!2d145.0423940634514!3d-37.8997313578997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x6ad66ad657aee985%3A0x5045675218cddc0!2sClayton%20VIC!3m2!1d-37.914547899999995!2d145.127492!4m5!1s0x6ad6696cd1a408d7%3A0x5045675218cf900!2sCaulfield%20VIC!3m2!1d-37.884!2d145.0266!5e0!3m2!1sen!2sau!4v1632734061641!5m2!1sen!2sau"
+                <iframe 
+                    id="mapurl"
                     width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
@@ -38,38 +45,32 @@
                 <h4>From: <span id="from"></span></h4>
             </div>
             <div class="col s12 m6 l6">
-                <h4>To: <span>Caulfiled</span></h4>
+                <h4>To: <span id="to"></span></h4>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m6 l6">
-                <h4>Distance: <span>15</span> KM</h4>
+                <h4>Distance: <span id="distance"></span> KM</h4>
             </div>
             <div class="col s12 m6 l6">
-                <h4>Fuel: <span>15</span> L</h4>
+                <h4>Fuel: <span id="fuel"></span> L</h4>
             </div>
 
         </div>
         <div class="row">
             <div class="col s12 m6 l6">
-                <h4>Average Speed: <span>15</span> km/h</h4>
+                <h4>Average Speed: <span></span> km/h</h4>
             </div>
             <div class="col s12 m6 l6">
-                <h4>Time: <span>15</span> Mins</h4>
+                <h4>Time: <span id="time"></span> Mins</h4>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m6 l6">
-                <h4>Highest Speed: <span>80</span> km/h</h4>
+                <h4>Highest Speed: <span></span> km/h</h4>
             </div>
             <div class="col s12 m6 l6">
-                <h4>Ave Engine Temperature: <span>15</span> ℃</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <iframe src="http://your_dashboard_in_node-red:1880/ui" height="800" width="1000"></iframe>
-
+                <h4>Ave Engine Temperature: <span></span> ℃</h4>
             </div>
         </div>
 
