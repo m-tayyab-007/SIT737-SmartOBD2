@@ -223,16 +223,43 @@ const newUser = () => {
 };
 //
 
-let showTrip = () =>{
+let showTrip = () => {};
+const AverageSpeed = (array) =>{
+  let x = 0;
+  array.forEach(element => {
+    x += element.speed;
+  });
+  return Math.round(x / array.length);
+};
+const AverageBrake = (array) =>{
+  let x = 0;
+  array.forEach(element => {
+    x += element.brake;
+  });
+  return Math.round(x / array.length);
+};
+const AverageFuel = (array) =>{
+  let x = 0;
+  array.forEach(element => {
+    x += element.fuel;
+  });
+  return Math.round(x / array.length);
 
 };
+const AverageTemp = (array) =>{
+  let x = 0;
+  array.forEach(element => {
+    x += element.temprature;
+  });
+  return Math.round(x / array.length);
 
+};
 const requestUploading = () => {
-  console.log('run');
+  console.log("run");
   $.get("/api/data", (drivingData) => {
     let x = [];
     let tripdata = [];
-    console.log('run2');
+    console.log("run2");
     for (let i = 0; i < drivingData.length; i++) {
       if (i >= 1) {
         let newestData = drivingData[i];
@@ -244,17 +271,17 @@ const requestUploading = () => {
         }
       }
     }
-    console.log('success');
-    for (let i = 0; i < x.length + 1; i++) {
+    console.log("success");
+    console.log(x);
+    for (let i = 0; i <= x.length; i++) {
+      // code block
       if (i < x.length) {
-        if (i = 0) {
+        if (i === 0) {
           tripdata.push(drivingData.slice(0, x[i]));
-        }
-        else {
+        } else {
           tripdata.push(drivingData.slice(x[i - 1], x[i]));
         }
-      }
-      else {
+      } else {
         tripdata.push(drivingData.slice(x[i - 1], drivingData.length - 1));
       }
     }
@@ -262,35 +289,38 @@ const requestUploading = () => {
     // updateData(tripdata);
 
     let tripNumber = tripdata.length;
-    for(i = 1; i < tripNumber + 1; i++){
-
-      let item= 
-      '<div class="col s4 m3 l2">' +
-      '<button onclick="showTrip('+(i-1)+')" class="btn waves-effect waves-light col s12">trip'+i+'</button>'+
-      '</div>'
-      $('#listSubmissions').append(item)
-
+    for (i = 1; i < tripNumber + 1; i++) {
+      let item =
+        '<div class="col s4 m3 l2">' +
+        '<button onclick="showTrip(' +
+        (i - 1) +
+        ')" class="btn waves-effect waves-light col s12">trip' +
+        i +
+        "</button>" +
+        "</div>";
+      $("#listSubmissions").append(item);
     }
-      showTrip = (index) => {
+    showTrip = (index) => {
       let trip = tripdata[index];
-      $("#from").text(trip[trip.length-1].from);
-      $("#to").text(trip[trip.length-1].to);
-      $("#mapurl").attr("src",trip[trip.length-1].url);
-      $("#time").text(trip[trip.length-1].time);
-      $("#fuel").text(trip.fuel);
-      $("#distance").text(trip[trip.length-1].distance);
-    }
-
-  })
+      $("#from").text(trip[trip.length - 1].from);
+      $("#to").text(trip[trip.length - 1].to);
+      $("#mapurl").attr("src", trip[trip.length - 1].url);
+      $("#time").text(trip[trip.length - 1].time);
+      $("#distance").text(trip[trip.length - 1].distance);
+      $("#aSpeed").text(AverageSpeed(trip));
+      $("#aBrake").text(AverageBrake(trip));
+      $("#aFuel").text(AverageFuel(trip));
+      $("#aTemp").text(AverageTemp(trip));
+    };
+  });
 };
 
-
-const repeatRequest = () => {
-  setInterval(function () {
-    requestUploading();
-    //this code runs every second
-  }, 500);
-};
+// const repeatRequest = () => {
+//   setInterval(function () {
+//     requestUploading();
+//     //this code runs every second
+//   }, 500);
+// };
 $(document).ready(function () {
   console.log("Ready");
   // modal JQuery

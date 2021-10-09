@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/auth");
+
 //login page
 router.get("/", (req, res) => {
   res.render("login");
@@ -28,6 +29,7 @@ router.get("/logout", (req, res) => {
 router.get("/homepage", ensureAuthenticated, (req, res) => {
   // collect current session used for the following pages
   req.session.user = req.user;
+  // userInform = req.user;
   res.render("homepage", {
     user: req.user,
   });
