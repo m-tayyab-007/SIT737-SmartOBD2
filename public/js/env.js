@@ -285,7 +285,7 @@ socket.on("highTem", (temperature) => {
 socket.on("highFuel", (fuel) => {
   if (fuel >= 12) {
     $("#damageFuel").html(
-      "Potential accident may occur due to a very high comsumption of fuel detected on your car<br> Please pull over on the side and switch off engine ASAP!!!<br> Engine oil comsuption: " +
+      "Potential accident may occur due to a very high comsumption of fuel detected on your car<br> Please pull over on the side and switch off engine ASAP!!!<br> Fuel comsuption: " +
         fuel +
         "L/km3"
     );
