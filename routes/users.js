@@ -94,33 +94,7 @@ router.post("/", (req, res) => {
       series: series,
       engine: engine,
     });
-    // res.redirect("/register");
-    // res.render("register", {
-    //   errors: errors,
-    //   code: code,
-    //   first_name: first_name,
-    //   email: email,
-    //   password: password,
-    //   password2: password2,
-    //   brand: brand,
-    //   model: model,
-    //   year: year,
-    //   series: series,
-    //   engine: engine,
-    // });
-    // res.render("register", {
-    //   errors: errors,
-    //   code: code,
-    //   first_name: first_name,
-    //   email: email,
-    //   password: password,
-    //   password2: password2,
-    //   brand: brand,
-    //   model: model,
-    //   year: year,
-    //   series: series,
-    //   engine: engine,
-    // });
+
   } else {
     //check if OBD2 series code is registered
     User.findOne({ code: code }).exec((err, user) => {
@@ -166,42 +140,62 @@ router.post("/", (req, res) => {
               engine,
             });
           } else {
-            //get the health information based on OBD2 device code registered
+            // get the health information based on OBD2 device code registered
+            function RandomData(min, max) {
+              return Math.floor(Math.random() * (max - min + 1)) + min
+          }
             function healthCheck(code) {
               switch (code) {
-                case "SMART-OBD2-19012021-001":
-                  var proportions = {
-                    iginition: 99,
-                    electric: 98,
-                    coolant: 92,
-                    lubrication: 95,
-                    exhaust: 94,
-                    fuel: 92,
-                    overall: 95,
-                  };
+                case "OBD001":
+                    var iginition = RandomData(80, 100),
+                    electric = RandomData(63, 100),
+                    coolant = RandomData(40, 100),
+                    lubrication = RandomData(68, 100),
+                    exhaust = RandomData(65, 100),
+                    fuel = RandomData(79, 100),
+                    overall = Math.round((iginition + electric + coolant + lubrication + exhaust + fuel) / 6);
                   break;
-                case "SMART-OBD2-19012021-002":
-                  var proportions = {
-                    iginition: 99,
-                    electric: 98,
-                    coolant: 92,
-                    lubrication: 95,
-                    exhaust: 94,
-                    fuel: 92,
-                    overall: 95,
-                  };
-                case "SMART-OBD2-21012021-010":
-                  var proportions = {
-                    iginition: 99,
-                    electric: 98,
-                    coolant: 92,
-                    lubrication: 95,
-                    exhaust: 94,
-                    fuel: 92,
-                    overall: 94,
-                  };
+                case "OBD002":
+                  var iginition = RandomData(80, 100),
+                    electric = RandomData(63, 100),
+                    coolant = RandomData(40, 100),
+                    lubrication = RandomData(68, 100),
+                    exhaust = RandomData(65, 100),
+                    fuel = RandomData(79, 100),
+                    overall = Math.round((iginition + electric + coolant + lubrication + exhaust + fuel) / 6);
+                  break;
+                case "OBD003":
+                  var iginition = RandomData(80, 100),
+                    electric = RandomData(63, 100),
+                    coolant = RandomData(40, 100),
+                    lubrication = RandomData(68, 100),
+                    exhaust = RandomData(65, 100),
+                    fuel = RandomData(79, 100),
+                    overall = Math.round((iginition + electric + coolant + lubrication + exhaust + fuel) / 6);
+                  break;
               }
-              return proportions;
+              return {iginition: iginition,
+                      electric: electric,
+                      coolant: coolant,
+                      lubrication: lubrication,
+                      exhaust: exhaust,
+                      fuel: fuel,
+                      overall: overall};
+            }
+            //get the node-red url that simulates the OBD dongle
+            function urlCheck(code) {
+              switch (code) {
+                case "OBD001":
+                  var url = "http://localhost:1881/ui";
+                  break;
+                case "OBD002":
+                  var url = "http://localhost:1882/ui";
+                  break;
+                case "OBD003":
+                  var url = "http://localhost:1883/ui";
+                  break;
+              }
+              return url;
             }
             //new user created
             const newUser = new User({
@@ -211,6 +205,7 @@ router.post("/", (req, res) => {
               password: password,
               car: [brand, model, year, series, engine],
               car_health: healthCheck(code),
+              url: urlCheck(code),
             });
 
             //hash password
@@ -237,20 +232,6 @@ router.post("/", (req, res) => {
     });
   }
 });
-//login
-// router.post("/login", (req, res, next) => {
-//   passport.authenticate("local", {
-//     successRedirect: "/homepage",
-//     failureRedirect: "/users/login",
-//     failureFlash: true,
-//   })(req, res, next);
-// });
-//logout
-// router.get("/logout", (req, res) => {
-//   req.logout();
-//   req.flash("success_msg", "Now logged out");
-//   res.redirect("/login");
-// });
 router.get("/", (req, res) => {
   if (render) {
     res.render("register", {
@@ -279,4 +260,4 @@ router.get("/", (req, res) => {
   }
 });
 exports.router = router;
-// module.exports = router;
+
