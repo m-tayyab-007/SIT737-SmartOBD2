@@ -140,10 +140,10 @@ router.post("/", (req, res) => {
               engine,
             });
           } else {
+            // get the health information based on OBD2 device code registered
             function RandomData(min, max) {
               return Math.floor(Math.random() * (max - min + 1)) + min
           }
-            //get the health information based on OBD2 device code registered
             function healthCheck(code) {
               switch (code) {
                 case "OBD001":
@@ -260,4 +260,3 @@ router.get("/", (req, res) => {
   }
 });
 exports.router = router;
-
