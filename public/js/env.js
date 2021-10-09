@@ -221,202 +221,106 @@ const newUser = () => {
   console.log(rUser);
   uploadUser(rUser);
 };
+//
 
-let socket = io();
 let showTrip = () => {};
-const AverageSpeed = (array) => {
+const AverageSpeed = (array) =>{
   let x = 0;
-  array.forEach((element) => {
+  array.forEach(element => {
     x += element.speed;
   });
   return Math.round(x / array.length);
 };
-const AverageBrake = (array) => {
+const AverageBrake = (array) =>{
   let x = 0;
-  array.forEach((element) => {
+  array.forEach(element => {
     x += element.brake;
   });
   return Math.round(x / array.length);
 };
-const AverageFuel = (array) => {
+const AverageFuel = (array) =>{
   let x = 0;
-  array.forEach((element) => {
+  array.forEach(element => {
     x += element.fuel;
   });
   return Math.round(x / array.length);
+
 };
-const AverageTemp = (array) => {
+const AverageTemp = (array) =>{
   let x = 0;
-  array.forEach((element) => {
-    x += element.temperature;
+  array.forEach(element => {
+    x += element.temprature;
   });
   return Math.round(x / array.length);
+
 };
-// socket.on('join',(room) =>{
-//   socket.join(room);
-//   console.log("Detected you are in the location: " + room);
-// })
-
-socket.on("alert", (data) => {
-  console.log(
-    "potential accident alarm received on car with plate: " + data.reg
-  );
-  $("#alarm").html(
-    "Beware,beware, beware! <br>In your location :" +
-      data.range +
-      "<br>Potential accident detected on car with plate: " +
-      data.reg
-  );
-});
-
-socket.on("highTem", (temperature) => {
-  if (temperature >= 218) {
-    $("#damageTemp").html(
-      "Potential accident may occur due to a very high engine temperature detected on your car<br> Please pull over on the side and switch off engine ASAP!!!<br> Engine temperature: " +
-        tempreature +
-        "celsius dagree"
-    );
-  } else {
-    $("#alarmTem").html(
-      "High engine tempratrue detected, " + tempreature + "celsius dagree"
-    );
-  }
-});
-socket.on("highFuel", (fuel) => {
-  if (fuel >= 12) {
-    $("#damageFuel").html(
-      "Potential accident may occur due to a very high comsumption of fuel detected on your car<br> Please pull over on the side and switch off engine ASAP!!!<br> Engine oil comsuption: " +
-        fuel +
-        "L/km3"
-    );
-  } else {
-    $("#alarmFuel").html("High fuel consumption detected, " + fuel + "L/km3");
-  }
-});
-socket.on("lowBrake", (brake) => {
-  if (brake <= 56) {
-    $("#damageBrake").html(
-      "Potential accident may occur due to a very bad performance of brake system detected on your car<br> Please pull over on the side and switch off engine ASAP!!!<br> Brake performance: " +
-        brake
-    );
-  } else {
-    $("#alarmBrake").html("Bad brake performance detected, " + brake);
-  }
-});
-socket.on("normalTem", (temperature) => {
-  $("#alarmTem").html("");
-});
-socket.on("normalFuel", (fuel) => {
-  $("#alarmFuel").html("");
-});
-socket.on("normalBrake", (brake) => {
-  $("#alarmBrake").html("");
-});
-
-socket.on("trip button", (array) => {
-  console.log(array);
-  array.forEach((element) => {
-    $("#listSubmissions").append(element);
-  });
-});
-// get the number of history data
-let numOfHstyData;
-const requestTrip = () => {
+const requestUploading = () => {
+  console.log("run");
   $.get("/api/data", (drivingData) => {
-    if (drivingData.length > 0) {
-      numOfHstyData = drivingData.length;
-      console.log(numOfHstyData);
-      let x = [];
-      let tripdata = [];
-      console.log("run2");
-      for (let i = 0; i < drivingData.length; i++) {
-        if (i >= 1) {
-          let newestData = drivingData[i];
-          let lastData = drivingData[i - 1];
-          if (newestData.timestamp - lastData.timestamp >= 10000) {
-            // let trip = [lastData.from, lastData.timestamp, lastData.to, lastData.time, lastData.fuel, lastData.distance, lastData.url];
-            // updateData(trip);
-            x.push(i);
-          }
+    let x = [];
+    let tripdata = [];
+    console.log("run2");
+    for (let i = 0; i < drivingData.length; i++) {
+      if (i >= 1) {
+        let newestData = drivingData[i];
+        let lastData = drivingData[i - 1];
+        if (newestData.timestamp - lastData.timestamp >= 10000) {
+          // let trip = [lastData.from, lastData.timestamp, lastData.to, lastData.time, lastData.fuel, lastData.distance, lastData.url];
+          // updateData(trip);
+          x.push(i);
         }
       }
-      console.log("success");
-      console.log(x);
-      if (x.length === 0) {
-        tripdata.push(drivingData);
+    }
+    console.log("success");
+    console.log(x);
+    for (let i = 0; i <= x.length; i++) {
+      // code block
+      if (i < x.length) {
+        if (i === 0) {
+          tripdata.push(drivingData.slice(0, x[i]));
+        } else {
+          tripdata.push(drivingData.slice(x[i - 1], x[i]));
+        }
       } else {
-        for (let i = 0; i <= x.length; i++) {
-          // code block
-          if (i < x.length) {
-            if (i === 0) {
-              tripdata.push(drivingData.slice(0, x[i]));
-            } else {
-              tripdata.push(drivingData.slice(x[i - 1], x[i]));
-            }
-          } else {
-            tripdata.push(drivingData.slice(x[i - 1], drivingData.length - 1));
-          }
-        }
+        tripdata.push(drivingData.slice(x[i - 1], drivingData.length - 1));
       }
-      console.log(tripdata);
-      // updateData(tripdata);
-
-      let tripNumber = tripdata.length;
-      console.log(tripNumber);
-      let buttonText = [];
-      if (tripdata[0]) {
-        for (i = 1; i < tripNumber + 1; i++) {
-          let item =
-            '<div class="col s4 m3 l2">' +
-            '<button onclick="showTrip(' +
-            (i - 1) +
-            ')" class="btn waves-effect waves-light col s12">trip' +
-            i +
-            "</button>" +
-            "</div>";
-          buttonText.push(item);
-          // $("#listSubmissions").append(item);
-        }
-        socket.emit("tripDetected", buttonText);
-        console.log("success");
-      }
-      // socket.emit('trip button', buttonText);
-      showTrip = (index) => {
-        let trip = tripdata[index];
-        $("#from").text(trip[trip.length - 1].from);
-        $("#to").text(trip[trip.length - 1].to);
-        $("#mapurl").attr("src", trip[trip.length - 1].url);
-        $("#time").text(trip[trip.length - 1].time);
-        $("#distance").text(trip[trip.length - 1].distance);
-        $("#aSpeed").text(AverageSpeed(trip));
-        $("#aBrake").text(AverageBrake(trip));
-        $("#aFuel").text(AverageFuel(trip));
-        $("#aTemp").text(AverageTemp(trip));
-      };
     }
+    console.log(tripdata);
+    // updateData(tripdata);
+
+    let tripNumber = tripdata.length;
+    for (i = 1; i < tripNumber + 1; i++) {
+      let item =
+        '<div class="col s4 m3 l2">' +
+        '<button onclick="showTrip(' +
+        (i - 1) +
+        ')" class="btn waves-effect waves-light col s12">trip' +
+        i +
+        "</button>" +
+        "</div>";
+      $("#listSubmissions").append(item);
+    }
+    showTrip = (index) => {
+      let trip = tripdata[index];
+      $("#from").text(trip[trip.length - 1].from);
+      $("#to").text(trip[trip.length - 1].to);
+      $("#mapurl").attr("src", trip[trip.length - 1].url);
+      $("#time").text(trip[trip.length - 1].time);
+      $("#distance").text(trip[trip.length - 1].distance);
+      $("#aSpeed").text(AverageSpeed(trip));
+      $("#aBrake").text(AverageBrake(trip));
+      $("#aFuel").text(AverageFuel(trip));
+      $("#aTemp").text(AverageTemp(trip));
+    };
   });
 };
 
-const requestAlarm = () => {
-  $.get("/api/data", (drivingData) => {
-    if (drivingData.length > 0) {
-      if (drivingData.length > numOfHstyData) {
-        var newestData = drivingData[drivingData.length - 1];
-        socket.emit("range", newestData.range);
-        socket.emit("sensorData", newestData);
-        // console.log(newestData);
-      }
-    }
-  });
-};
-
-const repeatAlarm = () => {
-  setInterval(function () {
-    requestAlarm();
-    // console.log("Success");
-  }, 2000);
-};
-
+// const repeatRequest = () => {
+//   setInterval(function () {
+//     requestUploading();
+//     //this code runs every second
+//   }, 500);
+// };
 $(document).ready(function () {
   console.log("Ready");
   // modal JQuery
@@ -448,10 +352,8 @@ $(document).ready(function () {
 
   displayModels();
   // HealthCheck with specified OBD2 series code
-  // setInterval(function () {
-  //   console.log(socket.rooms);
-  //   // console.log("Success");
+  // setTimeout(() => {
+  requestUploading();
   // }, 2000);
-  requestTrip();
-  repeatAlarm();
+  // repeatRequest();
 });
