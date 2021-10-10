@@ -183,7 +183,7 @@ function displayEngines() {
   // Reinitialize materialize select
   $("select").formSelect();
 }
-//REST api create users
+//REST api creating users
 const uploadUser = (uploadings) => {
   $.ajax({
     url: "/api/users",
@@ -221,9 +221,11 @@ const newUser = () => {
   console.log(rUser);
   uploadUser(rUser);
 };
-
+// import socket
 let socket = io();
+// function for trip button
 let showTrip = () => {};
+// function to calculate average data
 const AverageSpeed = (array) => {
   let x = 0;
   array.forEach((element) => {
@@ -252,11 +254,7 @@ const AverageTemp = (array) => {
   });
   return Math.round(x / array.length);
 };
-// socket.on('join',(room) =>{
-//   socket.join(room);
-//   console.log("Detected you are in the location: " + room);
-// })
-
+//show alert once listened 
 socket.on("alert", (data) => {
   console.log(
     "potential accident alarm received on car with plate: " + data.reg
@@ -268,7 +266,7 @@ socket.on("alert", (data) => {
       data.reg
   );
 });
-
+//show abnormal data once listened 
 socket.on("highTem", (temperature) => {
   if (temperature >= 218) {
     $("#damageTemp").html(
@@ -282,6 +280,7 @@ socket.on("highTem", (temperature) => {
     );
   }
 });
+//show abnormal data once listened 
 socket.on("highFuel", (fuel) => {
   if (fuel >= 12) {
     $("#damageFuel").html(
@@ -293,6 +292,7 @@ socket.on("highFuel", (fuel) => {
     $("#alarmFuel").html("High fuel consumption detected, " + fuel + "L/km3");
   }
 });
+//show abnormal data once listened 
 socket.on("lowBrake", (brake) => {
   if (brake <= 56) {
     $("#damageBrake").html(
@@ -303,6 +303,7 @@ socket.on("lowBrake", (brake) => {
     $("#alarmBrake").html("Bad brake performance detected, " + brake);
   }
 });
+//remove low risk alert data once listened normal data 
 socket.on("normalTem", (temperature) => {
   $("#alarmTem").html("");
 });
@@ -312,7 +313,7 @@ socket.on("normalFuel", (fuel) => {
 socket.on("normalBrake", (brake) => {
   $("#alarmBrake").html("");
 });
-
+// generate trip button once listended trip information
 socket.on("trip button", (array) => {
   console.log(array);
   array.forEach((element) => {
@@ -326,7 +327,9 @@ const requestTrip = () => {
     if (drivingData.length > 0) {
       numOfHstyData = drivingData.length;
       console.log(numOfHstyData);
+      // Used to store the index of the first element of the next trip 
       let x = [];
+      // Used to store driving data for different trips.
       let tripdata = [];
       console.log("run2");
       for (let i = 0; i < drivingData.length; i++) {
@@ -334,8 +337,6 @@ const requestTrip = () => {
           let newestData = drivingData[i];
           let lastData = drivingData[i - 1];
           if (newestData.timestamp - lastData.timestamp >= 10000) {
-            // let trip = [lastData.from, lastData.timestamp, lastData.to, lastData.time, lastData.fuel, lastData.distance, lastData.url];
-            // updateData(trip);
             x.push(i);
           }
         }
@@ -359,8 +360,7 @@ const requestTrip = () => {
         }
       }
       console.log(tripdata);
-      // updateData(tripdata);
-
+      // Used to get the number of trips.
       let tripNumber = tripdata.length;
       console.log(tripNumber);
       let buttonText = [];
@@ -375,12 +375,10 @@ const requestTrip = () => {
             "</button>" +
             "</div>";
           buttonText.push(item);
-          // $("#listSubmissions").append(item);
         }
         socket.emit("tripDetected", buttonText);
-        console.log("success");
       }
-      // socket.emit('trip button', buttonText);
+      // show current trip information 
       showTrip = (index) => {
         let trip = tripdata[index];
         $("#from").text(trip[trip.length - 1].from);
@@ -396,24 +394,25 @@ const requestTrip = () => {
     }
   });
 };
-
+// If user is driving
 const requestAlarm = () => {
   $.get("/api/data", (drivingData) => {
     if (drivingData.length > 0) {
+      // compare history data and current data to determine if the user is in driving
       if (drivingData.length > numOfHstyData) {
         var newestData = drivingData[drivingData.length - 1];
+        // emit current location of user to set socket room
         socket.emit("range", newestData.range);
+        // emit current data detected
         socket.emit("sensorData", newestData);
-        // console.log(newestData);
       }
     }
   });
 };
-
+// Send alarm request as long as new data sent by sensor
 const repeatAlarm = () => {
   setInterval(function () {
     requestAlarm();
-    // console.log("Success");
   }, 2000);
 };
 
@@ -447,11 +446,8 @@ $(document).ready(function () {
   });
 
   displayModels();
-  // HealthCheck with specified OBD2 series code
-  // setInterval(function () {
-  //   console.log(socket.rooms);
-  //   // console.log("Success");
-  // }, 2000);
+  // Record the history trip once user logged in
   requestTrip();
+
   repeatAlarm();
 });
