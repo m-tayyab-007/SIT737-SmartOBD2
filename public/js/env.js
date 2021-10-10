@@ -254,7 +254,7 @@ const AverageTemp = (array) => {
   });
   return Math.round(x / array.length);
 };
-//show alert once listened 
+//show alert once listened
 socket.on("alert", (data) => {
   console.log(
     "potential accident alarm received on car with plate: " + data.reg
@@ -266,7 +266,7 @@ socket.on("alert", (data) => {
       data.reg
   );
 });
-//show abnormal data once listened 
+//show abnormal data once listened
 socket.on("highTem", (temperature) => {
   if (temperature >= 218) {
     $("#damageTemp").html(
@@ -280,7 +280,7 @@ socket.on("highTem", (temperature) => {
     );
   }
 });
-//show abnormal data once listened 
+//show abnormal data once listened
 socket.on("highFuel", (fuel) => {
   if (fuel >= 12) {
     $("#damageFuel").html(
@@ -292,7 +292,7 @@ socket.on("highFuel", (fuel) => {
     $("#alarmFuel").html("High fuel consumption detected, " + fuel + "L/km3");
   }
 });
-//show abnormal data once listened 
+//show abnormal data once listened
 socket.on("lowBrake", (brake) => {
   if (brake <= 56) {
     $("#damageBrake").html(
@@ -303,7 +303,7 @@ socket.on("lowBrake", (brake) => {
     $("#alarmBrake").html("Bad brake performance detected, " + brake);
   }
 });
-//remove low risk alert data once listened normal data 
+//remove low risk alert data once listened normal data
 socket.on("normalTem", (temperature) => {
   $("#alarmTem").html("");
 });
@@ -324,10 +324,12 @@ socket.on("trip button", (array) => {
 let numOfHstyData;
 const requestTrip = () => {
   $.get("/api/data", (drivingData) => {
-    if (drivingData.length > 0) {
+    if (drivingData.length == 0) {
+      numOfHstyData = 0;
+    } else {
       numOfHstyData = drivingData.length;
       console.log(numOfHstyData);
-      // Used to store the index of the first element of the next trip 
+      // Used to store the index of the first element of the next trip
       let x = [];
       // Used to store driving data for different trips.
       let tripdata = [];
@@ -378,7 +380,7 @@ const requestTrip = () => {
         }
         socket.emit("tripDetected", buttonText);
       }
-      // show current trip information 
+      // show current trip information
       showTrip = (index) => {
         let trip = tripdata[index];
         $("#from").text(trip[trip.length - 1].from);

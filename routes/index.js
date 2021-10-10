@@ -77,7 +77,7 @@ router.get("/delete", (req, res) => {
 } catch (e) {
   print(e);
 }
-  req.flash("success_msg", "User:" + userEmail +" with dongle: " + userCode +" has been deleted");
+  req.flash("success_msg", "User: " + userEmail +" with dongle: " + userCode +" has been deleted");
   res.redirect("/");
 });
 
