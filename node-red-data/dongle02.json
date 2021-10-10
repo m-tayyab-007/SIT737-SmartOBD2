@@ -7,41 +7,6 @@
         "info": ""
     },
     {
-        "id": "0e1279a1720d4978",
-        "type": "mongodb out",
-        "z": "74f79aabdf523a9a",
-        "mongodb": "30759c261cddce0a",
-        "name": "mongoDB",
-        "collection": "simulate",
-        "payonly": false,
-        "upsert": false,
-        "multi": false,
-        "operation": "store",
-        "x": 640,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "cdb148c721fccb48",
-        "type": "function",
-        "z": "74f79aabdf523a9a",
-        "name": "All data",
-        "func": "min1 = msg.temprature.min1;\nmax1 = msg.temprature.max1;\nmin2 = msg.fuel.min2;\nmax2 = msg.fuel.max2;\nmin3 = msg.speed.min3;\nmax3 = msg.speed.max3;\nmin4 = msg.brake.min4;\nmax4 = msg.brake.max4;\nmin5 = msg.time.min5;\nmax5 = msg.time.max5;\ndistance = msg.distance\nfrom = msg.from\nto = msg.to\nurl = msg.url\ntimestamp = msg.timestamp\ndongle = msg.dongle\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\nreturn {fuel: generateRandomIntegerInRange(min2, max2),\n    temprature: generateRandomIntegerInRange(min1, max1),\n    speed: generateRandomIntegerInRange(min3, max3),\n    brake: generateRandomIntegerInRange(min4, max4),\n    time: generateRandomIntegerInRange(min5, max5),\n    distance,from,to,url,timestamp,dongle\n};\n \n\n\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 160,
-        "wires": [
-            [
-                "d9004a7887340ab1",
-                "0e1279a1720d4978"
-            ]
-        ]
-    },
-    {
         "id": "88464cb99f6eeeea",
         "type": "inject",
         "z": "74f79aabdf523a9a",
@@ -53,7 +18,7 @@
                 "vt": "date"
             },
             {
-                "p": "temprature",
+                "p": "temperature",
                 "v": "{\"min1\":195,\"max1\":220}",
                 "vt": "json"
             },
@@ -75,6 +40,11 @@
             {
                 "p": "time",
                 "v": "{\"min5\":7,\"max5\":10}",
+                "vt": "json"
+            },
+            {
+                "p": "range",
+                "v": "{\"min6\":5,\"max6\":35}",
                 "vt": "json"
             },
             {
@@ -101,6 +71,11 @@
                 "p": "dongle",
                 "v": "OBD002",
                 "vt": "str"
+            },
+            {
+                "p": "reg",
+                "v": "UFO-234",
+                "vt": "str"
             }
         ],
         "repeat": "2",
@@ -108,15 +83,276 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payloadType": "str",
-        "x": 60,
+        "x": 80,
         "y": 140,
         "wires": [
             []
         ]
     },
     {
-        "id": "d9004a7887340ab1",
+        "id": "d126af66002cd007",
+        "type": "ui_switch",
+        "z": "74f79aabdf523a9a",
+        "name": "",
+        "label": "Car On/Off",
+        "tooltip": "",
+        "group": "f4dd05d18cf281f0",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "control",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "open",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "close",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 90,
+        "y": 440,
+        "wires": [
+            [
+                "80aecc937fddc668"
+            ]
+        ]
+    },
+    {
+        "id": "80aecc937fddc668",
+        "type": "gate",
+        "z": "74f79aabdf523a9a",
+        "name": "",
+        "controlTopic": "control",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memory",
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "77577978c0168f82",
+                "648542f1e7222a59",
+                "8b8f7dcb6ba22e2d",
+                "0587239bb6026298"
+            ]
+        ]
+    },
+    {
+        "id": "6cb6b6986bd17119",
+        "type": "inject",
+        "z": "74f79aabdf523a9a",
+        "name": "Trip 02",
+        "props": [
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "temperature",
+                "v": "{\"min1\":195,\"max1\":220}",
+                "vt": "json"
+            },
+            {
+                "p": "fuel",
+                "v": "{\"min2\":8,\"max2\":12}",
+                "vt": "json"
+            },
+            {
+                "p": "speed",
+                "v": "{\"min3\":30,\"max3\":60}",
+                "vt": "json"
+            },
+            {
+                "p": "brake",
+                "v": "{\"min4\":55,\"max4\":80}",
+                "vt": "json"
+            },
+            {
+                "p": "time",
+                "v": "{\"min5\":12,\"max5\":16}",
+                "vt": "json"
+            },
+            {
+                "p": "range",
+                "v": "{\"min6\":2,\"max6\":10}",
+                "vt": "json"
+            },
+            {
+                "p": "from",
+                "v": "Glen Waverley",
+                "vt": "str"
+            },
+            {
+                "p": "to",
+                "v": "Deakin Uni Burwood",
+                "vt": "str"
+            },
+            {
+                "p": "url",
+                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d25199.700462113164!2d145.1242322551394!3d-37.86116650358657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad66bb67ebd66cb%3A0x5045675218cdb40!2sGlen%20Waverley%20VIC!3m2!1d-37.874350199999995!2d145.1668205!4m5!1s0x6ad640592c2ddceb%3A0x805bd52f251bd12!2sDeakin%20University%20Melbourne%20Burwood%20Campus%2C%20Deakin%20University%2C%20Burwood%20Highway%2C%20Burwood%20VIC!3m2!1d-37.8475399!2d145.1149471!5e0!3m2!1sen!2sau!4v1633472475566!5m2!1sen!2sau",
+                "vt": "str"
+            },
+            {
+                "p": "distance",
+                "v": "8",
+                "vt": "num"
+            },
+            {
+                "p": "dongle",
+                "v": "OBD002",
+                "vt": "str"
+            },
+            {
+                "p": "reg",
+                "v": "UFO-234",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc42020d58f9d34b",
+        "type": "inject",
+        "z": "74f79aabdf523a9a",
+        "name": "trip 03",
+        "props": [
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "temperature",
+                "v": "{\"min1\":195,\"max1\":220}",
+                "vt": "json"
+            },
+            {
+                "p": "fuel",
+                "v": "{\"min2\":8,\"max2\":12}",
+                "vt": "json"
+            },
+            {
+                "p": "speed",
+                "v": "{\"min3\":30,\"max3\":60}",
+                "vt": "json"
+            },
+            {
+                "p": "brake",
+                "v": "{\"min4\":55,\"max4\":80}",
+                "vt": "json"
+            },
+            {
+                "p": "time",
+                "v": "{\"min5\":14,\"max5\":20}",
+                "vt": "json"
+            },
+            {
+                "p": "range",
+                "v": "{\"min6\":5,\"max6\":45}",
+                "vt": "json"
+            },
+            {
+                "p": "from",
+                "v": "Clayton",
+                "vt": "str"
+            },
+            {
+                "p": "to",
+                "v": "Deakin Uni Burwood",
+                "vt": "str"
+            },
+            {
+                "p": "url",
+                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d50404.51460712483!2d145.09160044986263!3d-37.85368776915661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad66a84369ae825%3A0x5045675218cdc00!2sChadstone%20VIC%203148!3m2!1d-37.8810091!2d145.0959519!4m5!1s0x6ad640b0a944875b%3A0xb0a0f0126a95b73f!2sBox%20Hill%2C%20Box%20Hill%20VIC!3m2!1d-37.8192211!2d145.1211567!5e0!3m2!1sen!2sau!4v1633472017648!5m2!1sen!2sau",
+                "vt": "str"
+            },
+            {
+                "p": "distance",
+                "v": "8.9",
+                "vt": "num"
+            },
+            {
+                "p": "dongle",
+                "v": "OBD002",
+                "vt": "str"
+            },
+            {
+                "p": "reg",
+                "v": "UFO-234",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 20,
+        "wires": [
+            [
+                "80aecc937fddc668"
+            ]
+        ]
+    },
+    {
+        "id": "3ae1c33270a374b5",
+        "type": "mongodb out",
+        "z": "74f79aabdf523a9a",
+        "mongodb": "30759c261cddce0a",
+        "name": "mongoDB",
+        "collection": "simulate",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 700,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "77577978c0168f82",
+        "type": "function",
+        "z": "74f79aabdf523a9a",
+        "name": "All data",
+        "func": "min1 = msg.temperature.min1;\nmax1 = msg.temperature.max1;\nmin2 = msg.fuel.min2;\nmax2 = msg.fuel.max2;\nmin3 = msg.speed.min3;\nmax3 = msg.speed.max3;\nmin4 = msg.brake.min4;\nmax4 = msg.brake.max4;\nmin5 = msg.time.min5;\nmax5 = msg.time.max5;\nmin6 = msg.range.min6;\nmax6 = msg.range.max6;\ndistance = msg.distance\nfrom = msg.from\nto = msg.to\nurl = msg.url\ntimestamp = msg.timestamp\ndongle = msg.dongle\nreg = msg.reg\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\nreturn {fuel: generateRandomIntegerInRange(min2, max2),\n    temperature: generateRandomIntegerInRange(min1, max1),\n    speed: generateRandomIntegerInRange(min3, max3),\n    brake: generateRandomIntegerInRange(min4, max4),\n    time: generateRandomIntegerInRange(min5, max5),\n    range: generateRandomIntegerInRange(min6, max6),\n    distance,from,to,url,timestamp,dongle,reg\n};\n \n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 160,
+        "wires": [
+            [
+                "de6c01631e41c5d9",
+                "3ae1c33270a374b5"
+            ]
+        ]
+    },
+    {
+        "id": "de6c01631e41c5d9",
         "type": "debug",
         "z": "74f79aabdf523a9a",
         "name": "",
@@ -124,36 +360,37 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "dongle",
+        "complete": "temperature",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 650,
+        "x": 730,
         "y": 100,
         "wires": []
     },
     {
-        "id": "4aca24e900a4ae45",
+        "id": "648542f1e7222a59",
         "type": "function",
         "z": "74f79aabdf523a9a",
-        "name": "Temprature",
-        "func": "min1 = msg.temprature.min1;\nmax1 = msg.temprature.max1;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min1, max1)\n};",
+        "name": "Temperature",
+        "func": "min1 = msg.temperature.min1;\nmax1 = msg.temperature.max1;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min1, max1)\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 470,
         "y": 340,
         "wires": [
             [
-                "66c882e992c4e70d",
-                "3e2ab929a5a8d7c8"
+                "ee35a1ae53c12897",
+                "d96255c1fb71f3be",
+                "25bf078ecac65cde"
             ]
         ]
     },
     {
-        "id": "c67a563637b3d5bf",
+        "id": "8b8f7dcb6ba22e2d",
         "type": "function",
         "z": "74f79aabdf523a9a",
         "name": "fuel",
@@ -163,37 +400,39 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
+        "x": 450,
         "y": 440,
         "wires": [
             [
-                "f90bcae83a194ee4",
-                "b625786f18e0517f"
+                "8b8c5571d577f365",
+                "3a625e2cf3925118",
+                "4a0c65db8dd41a8b"
             ]
         ]
     },
     {
-        "id": "cdc743aebfe50f23",
+        "id": "0587239bb6026298",
         "type": "function",
         "z": "74f79aabdf523a9a",
-        "name": "speed",
-        "func": "min3 = msg.speed.min3;\nmax3 = msg.speed.max3;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min3, max3)\n};",
+        "name": "brake",
+        "func": "min4 = msg.brake.min4;\nmax4 = msg.brake.max4;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min4, max4)\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
+        "x": 410,
         "y": 520,
         "wires": [
             [
-                "76ad362d41e65215",
-                "c45d6ce9db53817a"
+                "42454e34eb06a52b",
+                "8b85e6dc68c13b7d",
+                "dadb6938a9ecaeb2"
             ]
         ]
     },
     {
-        "id": "66c882e992c4e70d",
+        "id": "ee35a1ae53c12897",
         "type": "ui_gauge",
         "z": "74f79aabdf523a9a",
         "name": "",
@@ -202,7 +441,7 @@
         "width": "0",
         "height": "0",
         "gtype": "gage",
-        "title": "temprature",
+        "title": "temperature",
         "label": "celcius",
         "format": "{{value}}",
         "min": "190",
@@ -215,12 +454,12 @@
         "seg1": "210",
         "seg2": "220",
         "className": "",
-        "x": 650,
+        "x": 710,
         "y": 320,
         "wires": []
     },
     {
-        "id": "3e2ab929a5a8d7c8",
+        "id": "d96255c1fb71f3be",
         "type": "ui_chart",
         "z": "74f79aabdf523a9a",
         "name": "",
@@ -228,7 +467,7 @@
         "order": 1,
         "width": "0",
         "height": "0",
-        "label": "temprature-chart",
+        "label": "temperature-chart",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -257,14 +496,14 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 660,
+        "x": 730,
         "y": 360,
         "wires": [
             []
         ]
     },
     {
-        "id": "f90bcae83a194ee4",
+        "id": "8b8c5571d577f365",
         "type": "ui_gauge",
         "z": "74f79aabdf523a9a",
         "name": "",
@@ -286,12 +525,12 @@
         "seg1": "10",
         "seg2": "15",
         "className": "",
-        "x": 630,
+        "x": 690,
         "y": 440,
         "wires": []
     },
     {
-        "id": "b625786f18e0517f",
+        "id": "3a625e2cf3925118",
         "type": "ui_chart",
         "z": "74f79aabdf523a9a",
         "name": "",
@@ -328,27 +567,27 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 640,
+        "x": 700,
         "y": 480,
         "wires": [
             []
         ]
     },
     {
-        "id": "76ad362d41e65215",
+        "id": "42454e34eb06a52b",
         "type": "ui_gauge",
         "z": "74f79aabdf523a9a",
         "name": "",
-        "group": "e4c0d2431fe7285c",
+        "group": "a46a28de39daa027",
         "order": 0,
         "width": "0",
         "height": "0",
         "gtype": "gage",
-        "title": "Speed",
+        "title": "brake",
         "label": "km/h",
         "format": "{{value}}",
-        "min": "30",
-        "max": "60",
+        "min": "55",
+        "max": "80",
         "colors": [
             "#00b500",
             "#e6e600",
@@ -357,20 +596,20 @@
         "seg1": "55",
         "seg2": "59",
         "className": "",
-        "x": 630,
-        "y": 540,
+        "x": 690,
+        "y": 560,
         "wires": []
     },
     {
-        "id": "c45d6ce9db53817a",
+        "id": "8b85e6dc68c13b7d",
         "type": "ui_chart",
         "z": "74f79aabdf523a9a",
         "name": "",
-        "group": "e4c0d2431fe7285c",
+        "group": "a46a28de39daa027",
         "order": 1,
         "width": "0",
         "height": "0",
-        "label": "speed-chart",
+        "label": "brake-chart",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -399,220 +638,73 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 650,
-        "y": 580,
+        "x": 710,
+        "y": 600,
         "wires": [
             []
         ]
     },
     {
-        "id": "d126af66002cd007",
-        "type": "ui_switch",
+        "id": "25bf078ecac65cde",
+        "type": "ui_text",
         "z": "74f79aabdf523a9a",
+        "group": "5d81a0460650e608",
+        "order": 2,
+        "width": 0,
+        "height": 0,
         "name": "",
-        "label": "switch",
-        "tooltip": "",
-        "group": "f4dd05d18cf281f0",
-        "order": 0,
-        "width": "0",
-        "height": "0",
-        "passthru": true,
-        "decouple": "false",
-        "topic": "control",
-        "topicType": "str",
-        "style": "",
-        "onvalue": "open",
-        "onvalueType": "str",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "close",
-        "offvalueType": "str",
-        "officon": "",
-        "offcolor": "",
-        "animate": false,
+        "label": "temperature",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
         "className": "",
-        "x": 70,
-        "y": 440,
-        "wires": [
-            [
-                "80aecc937fddc668"
-            ]
-        ]
+        "x": 740,
+        "y": 280,
+        "wires": []
     },
     {
-        "id": "80aecc937fddc668",
-        "type": "gate",
+        "id": "4a0c65db8dd41a8b",
+        "type": "ui_text",
         "z": "74f79aabdf523a9a",
+        "group": "daa210e7c206b8b6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
         "name": "",
-        "controlTopic": "control",
-        "defaultState": "closed",
-        "openCmd": "open",
-        "closeCmd": "close",
-        "toggleCmd": "toggle",
-        "defaultCmd": "default",
-        "statusCmd": "status",
-        "persist": false,
-        "storeName": "memory",
-        "x": 210,
-        "y": 300,
-        "wires": [
-            [
-                "4aca24e900a4ae45",
-                "c67a563637b3d5bf",
-                "cdc743aebfe50f23",
-                "cdb148c721fccb48"
-            ]
-        ]
+        "label": "fuel",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 690,
+        "y": 400,
+        "wires": []
     },
     {
-        "id": "6cb6b6986bd17119",
-        "type": "inject",
+        "id": "dadb6938a9ecaeb2",
+        "type": "ui_text",
         "z": "74f79aabdf523a9a",
-        "name": "Trip 02",
-        "props": [
-            {
-                "p": "timestamp",
-                "v": "",
-                "vt": "date"
-            },
-            {
-                "p": "temprature",
-                "v": "{\"min1\":195,\"max1\":220}",
-                "vt": "json"
-            },
-            {
-                "p": "fuel",
-                "v": "{\"min2\":8,\"max2\":12}",
-                "vt": "json"
-            },
-            {
-                "p": "speed",
-                "v": "{\"min3\":30,\"max3\":60}",
-                "vt": "json"
-            },
-            {
-                "p": "brake",
-                "v": "{\"min4\":55,\"max4\":80}",
-                "vt": "json"
-            },
-            {
-                "p": "time",
-                "v": "{\"min5\":12,\"max5\":16}",
-                "vt": "json"
-            },
-            {
-                "p": "from",
-                "v": "Glen Waverley",
-                "vt": "str"
-            },
-            {
-                "p": "to",
-                "v": "Deakin Uni Burwood",
-                "vt": "str"
-            },
-            {
-                "p": "url",
-                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d25199.700462113164!2d145.1242322551394!3d-37.86116650358657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad66bb67ebd66cb%3A0x5045675218cdb40!2sGlen%20Waverley%20VIC!3m2!1d-37.874350199999995!2d145.1668205!4m5!1s0x6ad640592c2ddceb%3A0x805bd52f251bd12!2sDeakin%20University%20Melbourne%20Burwood%20Campus%2C%20Deakin%20University%2C%20Burwood%20Highway%2C%20Burwood%20VIC!3m2!1d-37.8475399!2d145.1149471!5e0!3m2!1sen!2sau!4v1633472475566!5m2!1sen!2sau",
-                "vt": "str"
-            },
-            {
-                "p": "distance",
-                "v": "8",
-                "vt": "num"
-            },
-            {
-                "p": "dongle",
-                "v": "OBD002",
-                "vt": "str"
-            }
-        ],
-        "repeat": "2",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "str",
-        "x": 100,
-        "y": 80,
-        "wires": [
-            []
-        ]
+        "group": "a46a28de39daa027",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "brake",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 690,
+        "y": 520,
+        "wires": []
     },
     {
-        "id": "dc42020d58f9d34b",
-        "type": "inject",
-        "z": "74f79aabdf523a9a",
-        "name": "trip 03",
-        "props": [
-            {
-                "p": "timestamp",
-                "v": "",
-                "vt": "date"
-            },
-            {
-                "p": "temprature",
-                "v": "{\"min1\":195,\"max1\":220}",
-                "vt": "json"
-            },
-            {
-                "p": "fuel",
-                "v": "{\"min2\":8,\"max2\":12}",
-                "vt": "json"
-            },
-            {
-                "p": "speed",
-                "v": "{\"min3\":30,\"max3\":60}",
-                "vt": "json"
-            },
-            {
-                "p": "brake",
-                "v": "{\"min4\":55,\"max4\":80}",
-                "vt": "json"
-            },
-            {
-                "p": "time",
-                "v": "{\"min5\":14,\"max5\":20}",
-                "vt": "json"
-            },
-            {
-                "p": "from",
-                "v": "Clayton",
-                "vt": "str"
-            },
-            {
-                "p": "to",
-                "v": "Deakin Uni Burwood",
-                "vt": "str"
-            },
-            {
-                "p": "url",
-                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d50404.51460712483!2d145.09160044986263!3d-37.85368776915661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad66a84369ae825%3A0x5045675218cdc00!2sChadstone%20VIC%203148!3m2!1d-37.8810091!2d145.0959519!4m5!1s0x6ad640b0a944875b%3A0xb0a0f0126a95b73f!2sBox%20Hill%2C%20Box%20Hill%20VIC!3m2!1d-37.8192211!2d145.1211567!5e0!3m2!1sen!2sau!4v1633472017648!5m2!1sen!2sau",
-                "vt": "str"
-            },
-            {
-                "p": "distance",
-                "v": "8.9",
-                "vt": "num"
-            },
-            {
-                "p": "dongle",
-                "v": "OBD002",
-                "vt": "str"
-            }
-        ],
-        "repeat": "2",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "str",
-        "x": 120,
-        "y": 20,
-        "wires": [
-            [
-                "80aecc937fddc668"
-            ]
-        ]
+        "id": "f4dd05d18cf281f0",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "ce8a760e58215cf0",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "30759c261cddce0a",
@@ -647,20 +739,9 @@
         "className": ""
     },
     {
-        "id": "e4c0d2431fe7285c",
+        "id": "a46a28de39daa027",
         "type": "ui_group",
-        "name": "speed",
-        "tab": "ce8a760e58215cf0",
-        "order": 3,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "f4dd05d18cf281f0",
-        "type": "ui_group",
-        "name": "Default",
+        "name": "brake",
         "tab": "ce8a760e58215cf0",
         "order": 4,
         "disp": true,

@@ -1,15 +1,15 @@
 [
     {
-        "id": "458782f98915e034",
+        "id": "5140f39a81560f94",
         "type": "tab",
         "label": "Dongle-01",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "b4372dc3197a84c0",
+        "id": "6b5a22337127aed0",
         "type": "mongodb out",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "mongodb": "30759c261cddce0a",
         "name": "mongoDB",
         "collection": "simulate",
@@ -22,11 +22,11 @@
         "wires": []
     },
     {
-        "id": "1eb310307206197b",
+        "id": "ce9a58554c49a21d",
         "type": "function",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "All data",
-        "func": "min1 = msg.temprature.min1;\nmax1 = msg.temprature.max1;\nmin2 = msg.fuel.min2;\nmax2 = msg.fuel.max2;\nmin3 = msg.speed.min3;\nmax3 = msg.speed.max3;\nmin4 = msg.brake.min4;\nmax4 = msg.brake.max4;\nmin5 = msg.time.min5;\nmax5 = msg.time.max5;\ndistance = msg.distance\nfrom = msg.from\nto = msg.to\nurl = msg.url\ntimestamp = msg.timestamp\ndongle = msg.dongle\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\nreturn {fuel: generateRandomIntegerInRange(min2, max2),\n    temprature: generateRandomIntegerInRange(min1, max1),\n    speed: generateRandomIntegerInRange(min3, max3),\n    brake: generateRandomIntegerInRange(min4, max4),\n    time: generateRandomIntegerInRange(min5, max5),\n    distance,from,to,url,timestamp,dongle\n};\n \n\n\n",
+        "func": "min1 = msg.temperature.min1;\nmax1 = msg.temperature.max1;\nmin2 = msg.fuel.min2;\nmax2 = msg.fuel.max2;\nmin3 = msg.speed.min3;\nmax3 = msg.speed.max3;\nmin4 = msg.brake.min4;\nmax4 = msg.brake.max4;\nmin5 = msg.time.min5;\nmax5 = msg.time.max5;\nmin6 = msg.range.min6;\nmax6 = msg.range.max6;\ndistance = msg.distance\nfrom = msg.from\nto = msg.to\nurl = msg.url\ntimestamp = msg.timestamp\ndongle = msg.dongle\nreg = msg.reg\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\nreturn {fuel: generateRandomIntegerInRange(min2, max2),\n    temperature: generateRandomIntegerInRange(min1, max1),\n    speed: generateRandomIntegerInRange(min3, max3),\n    brake: generateRandomIntegerInRange(min4, max4),\n    time: generateRandomIntegerInRange(min5, max5),\n    range: generateRandomIntegerInRange(min6, max6),\n    distance,from,to,url,timestamp,dongle,reg\n};\n \n\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -36,15 +36,15 @@
         "y": 160,
         "wires": [
             [
-                "c1b241555456e8b1",
-                "b4372dc3197a84c0"
+                "02d54057704fe092",
+                "6b5a22337127aed0"
             ]
         ]
     },
     {
-        "id": "5a17faa34926c7fb",
+        "id": "ce6c97c8556854dd",
         "type": "inject",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "Trip 01",
         "props": [
             {
@@ -53,7 +53,7 @@
                 "vt": "date"
             },
             {
-                "p": "temprature",
+                "p": "temperature",
                 "v": "{\"min1\":195,\"max1\":220}",
                 "vt": "json"
             },
@@ -75,6 +75,11 @@
             {
                 "p": "time",
                 "v": "{\"min5\":15,\"max5\":20}",
+                "vt": "json"
+            },
+            {
+                "p": "range",
+                "v": "{\"min6\":0,\"max6\":30}",
                 "vt": "json"
             },
             {
@@ -101,6 +106,11 @@
                 "p": "dongle",
                 "v": "OBD001",
                 "vt": "str"
+            },
+            {
+                "p": "reg",
+                "v": "ABC-123",
+                "vt": "str"
             }
         ],
         "repeat": "2",
@@ -115,46 +125,47 @@
         ]
     },
     {
-        "id": "c1b241555456e8b1",
+        "id": "02d54057704fe092",
         "type": "debug",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "dongle",
+        "complete": "temperature",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 670,
+        "x": 690,
         "y": 100,
         "wires": []
     },
     {
-        "id": "d0baccf6cc5b7c88",
+        "id": "06147498647b7e74",
         "type": "function",
-        "z": "458782f98915e034",
-        "name": "Temprature",
-        "func": "min1 = msg.temprature.min1;\nmax1 = msg.temprature.max1;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min1, max1)\n};",
+        "z": "5140f39a81560f94",
+        "name": "Temperature",
+        "func": "min1 = msg.temperature.min1;\nmax1 = msg.temperature.max1;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min1, max1)\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 390,
+        "x": 430,
         "y": 340,
         "wires": [
             [
-                "1742fea6df04c0ca",
-                "3c41c06c52bc60c3"
+                "a3ea364b54830e4f",
+                "a7ee70e5db58d719",
+                "3d64e88fd014b42c"
             ]
         ]
     },
     {
-        "id": "bba967a0b8ecac62",
+        "id": "46386ce2e24e6c13",
         "type": "function",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "fuel",
         "func": "var min2 = msg.fuel.min2\nvar max2 = msg.fuel.max2\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min;\n}\n\n\n\nreturn {payload: generateRandomIntegerInRange(min2, max2)};",
         "outputs": 1,
@@ -162,21 +173,22 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 410,
         "y": 440,
         "wires": [
             [
-                "dc76ba7461ae365e",
-                "c7119330d27fb7c8"
+                "130d6c618f1cb3bc",
+                "ef52a716d45a089c",
+                "78d3f93c89edec3e"
             ]
         ]
     },
     {
-        "id": "7e1432f0dd78722a",
+        "id": "fbd0056cf0dfd45f",
         "type": "function",
-        "z": "458782f98915e034",
-        "name": "speed",
-        "func": "min3 = msg.speed.min3;\nmax3 = msg.speed.max3;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min3, max3)\n};",
+        "z": "5140f39a81560f94",
+        "name": "brake",
+        "func": "min4 = msg.brake.min4;\nmax4 = msg.brake.max4;\n\n\nfunction generateRandomIntegerInRange(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min\n}\n\n\nreturn {\n    payload: generateRandomIntegerInRange(min4, max4)\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -186,22 +198,23 @@
         "y": 520,
         "wires": [
             [
-                "6614a452f02b4430",
-                "b2da9186465bb2d3"
+                "661108387f68e454",
+                "373ed1e6f9d3d5b0",
+                "ba3498a6893550f0"
             ]
         ]
     },
     {
-        "id": "1742fea6df04c0ca",
+        "id": "a3ea364b54830e4f",
         "type": "ui_gauge",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
         "group": "5d81a0460650e608",
         "order": 0,
         "width": "0",
         "height": "0",
         "gtype": "gage",
-        "title": "temprature",
+        "title": "temperature",
         "label": "celcius",
         "format": "{{value}}",
         "min": "190",
@@ -219,15 +232,15 @@
         "wires": []
     },
     {
-        "id": "3c41c06c52bc60c3",
+        "id": "a7ee70e5db58d719",
         "type": "ui_chart",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
         "group": "5d81a0460650e608",
         "order": 1,
         "width": "0",
         "height": "0",
-        "label": "temprature-chart",
+        "label": "temperature-chart",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -256,16 +269,16 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 680,
+        "x": 690,
         "y": 360,
         "wires": [
             []
         ]
     },
     {
-        "id": "dc76ba7461ae365e",
+        "id": "130d6c618f1cb3bc",
         "type": "ui_gauge",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
         "group": "daa210e7c206b8b6",
         "order": 0,
@@ -290,9 +303,9 @@
         "wires": []
     },
     {
-        "id": "c7119330d27fb7c8",
+        "id": "ef52a716d45a089c",
         "type": "ui_chart",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
         "group": "daa210e7c206b8b6",
         "order": 1,
@@ -334,20 +347,20 @@
         ]
     },
     {
-        "id": "6614a452f02b4430",
+        "id": "661108387f68e454",
         "type": "ui_gauge",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
-        "group": "e4c0d2431fe7285c",
+        "group": "d40c40e0703598e9",
         "order": 0,
         "width": "0",
         "height": "0",
         "gtype": "gage",
-        "title": "Speed",
+        "title": "brake",
         "label": "km/h",
         "format": "{{value}}",
-        "min": "30",
-        "max": "60",
+        "min": "55",
+        "max": "80",
         "colors": [
             "#00b500",
             "#e6e600",
@@ -357,19 +370,19 @@
         "seg2": "59",
         "className": "",
         "x": 650,
-        "y": 540,
+        "y": 560,
         "wires": []
     },
     {
-        "id": "b2da9186465bb2d3",
+        "id": "373ed1e6f9d3d5b0",
         "type": "ui_chart",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
-        "group": "e4c0d2431fe7285c",
+        "group": "d40c40e0703598e9",
         "order": 1,
         "width": "0",
         "height": "0",
-        "label": "speed-chart",
+        "label": "brake-chart",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -399,17 +412,17 @@
         "useDifferentColor": false,
         "className": "",
         "x": 670,
-        "y": 580,
+        "y": 600,
         "wires": [
             []
         ]
     },
     {
-        "id": "f4f754eb19ff1f9a",
+        "id": "7318dc153c67775a",
         "type": "ui_switch",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
-        "label": "switch",
+        "label": "Car On/Off",
         "tooltip": "",
         "group": "f4dd05d18cf281f0",
         "order": 0,
@@ -430,18 +443,18 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 90,
+        "x": 110,
         "y": 440,
         "wires": [
             [
-                "ba04aebfaaa724dd"
+                "fedac6ff27ab1848"
             ]
         ]
     },
     {
-        "id": "ba04aebfaaa724dd",
+        "id": "fedac6ff27ab1848",
         "type": "gate",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "",
         "controlTopic": "control",
         "defaultState": "closed",
@@ -456,17 +469,17 @@
         "y": 300,
         "wires": [
             [
-                "d0baccf6cc5b7c88",
-                "bba967a0b8ecac62",
-                "7e1432f0dd78722a",
-                "1eb310307206197b"
+                "06147498647b7e74",
+                "46386ce2e24e6c13",
+                "fbd0056cf0dfd45f",
+                "ce9a58554c49a21d"
             ]
         ]
     },
     {
-        "id": "cee5a431ae6d1b6c",
+        "id": "6c37007955640219",
         "type": "inject",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "Trip 02",
         "props": [
             {
@@ -475,7 +488,7 @@
                 "vt": "date"
             },
             {
-                "p": "temprature",
+                "p": "temperature",
                 "v": "{\"min1\":195,\"max1\":220}",
                 "vt": "json"
             },
@@ -500,6 +513,11 @@
                 "vt": "json"
             },
             {
+                "p": "range",
+                "v": "{\"min6\":10,\"max6\":40}",
+                "vt": "json"
+            },
+            {
                 "p": "from",
                 "v": "Box Hill",
                 "vt": "str"
@@ -511,7 +529,7 @@
             },
             {
                 "p": "url",
-                "v": "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50409.23680424637!2d145.10785810808204!3d-37.84678046494939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sau!4v1633132289165!5m2!1sen!2sau",
+                "v": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d50409.66383110071!2d145.1078580052893!3d-37.846155786684854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad640a5542b19f7%3A0x5045675218cd900!2sBox%20Hill%20VIC!3m2!1d-37.8181073!2d145.1238563!4m5!1s0x6ad66bb67ebd66cb%3A0x5045675218cdb40!2sGlen%20Waverley%20VIC!3m2!1d-37.874350199999995!2d145.1668205!5e0!3m2!1sen!2sau!4v1633777533547!5m2!1sen!2sau",
                 "vt": "str"
             },
             {
@@ -522,6 +540,11 @@
             {
                 "p": "dongle",
                 "v": "OBD001",
+                "vt": "str"
+            },
+            {
+                "p": "reg",
+                "v": "ABC-123",
                 "vt": "str"
             }
         ],
@@ -537,9 +560,9 @@
         ]
     },
     {
-        "id": "e15bac2b20df52bc",
+        "id": "be1b3490c25ea9f2",
         "type": "inject",
-        "z": "458782f98915e034",
+        "z": "5140f39a81560f94",
         "name": "trip 03",
         "props": [
             {
@@ -548,7 +571,7 @@
                 "vt": "date"
             },
             {
-                "p": "temprature",
+                "p": "temperature",
                 "v": "{\"min1\":195,\"max1\":220}",
                 "vt": "json"
             },
@@ -570,6 +593,11 @@
             {
                 "p": "time",
                 "v": "{\"min5\":16,\"max5\":22}",
+                "vt": "json"
+            },
+            {
+                "p": "range",
+                "v": "{\"min6\":5,\"max6\":45}",
                 "vt": "json"
             },
             {
@@ -596,6 +624,11 @@
                 "p": "dongle",
                 "v": "OBD001",
                 "vt": "str"
+            },
+            {
+                "p": "reg",
+                "v": "ABC-123",
+                "vt": "str"
             }
         ],
         "repeat": "2",
@@ -603,14 +636,64 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payloadType": "str",
         "x": 140,
         "y": 20,
         "wires": [
             [
-                "ba04aebfaaa724dd"
+                "fedac6ff27ab1848"
             ]
         ]
+    },
+    {
+        "id": "3d64e88fd014b42c",
+        "type": "ui_text",
+        "z": "5140f39a81560f94",
+        "group": "5d81a0460650e608",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "temperature",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 700,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "78d3f93c89edec3e",
+        "type": "ui_text",
+        "z": "5140f39a81560f94",
+        "group": "daa210e7c206b8b6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "fuel",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 650,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ba3498a6893550f0",
+        "type": "ui_text",
+        "z": "5140f39a81560f94",
+        "group": "d40c40e0703598e9",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "brake",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 650,
+        "y": 520,
+        "wires": []
     },
     {
         "id": "30759c261cddce0a",
@@ -645,11 +728,11 @@
         "className": ""
     },
     {
-        "id": "e4c0d2431fe7285c",
+        "id": "d40c40e0703598e9",
         "type": "ui_group",
-        "name": "speed",
+        "name": "brake",
         "tab": "ce8a760e58215cf0",
-        "order": 3,
+        "order": 5,
         "disp": true,
         "width": "6",
         "collapse": false,
@@ -660,7 +743,7 @@
         "type": "ui_group",
         "name": "Default",
         "tab": "ce8a760e58215cf0",
-        "order": 4,
+        "order": 6,
         "disp": true,
         "width": "6",
         "collapse": false,

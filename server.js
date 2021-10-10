@@ -51,32 +51,27 @@ app.use("/api/data", dataRoute.router);
 io.on("connection", (socket) => {
   console.log("User connected");
   let roomId;
+  // Emit trip button event back once listened
   socket.on('tripDetected',(html) =>{
     socket.emit('trip button',html);
     console.log('1');
   })
+  // Set room id once listend and join the room
   socket.on('range',(range)=>{
     if (range <=50) {
       roomId = 50;
-      // socket.emit('join',roomId);
-      // socket.join(roomId);
-      // console.log(data.dongle + " in the location " + roomId);
     }  
     else if (50 < range <= 100) {
       roomId = 50100;
-      // socket.emit('join',roomId);
-      // socket.join(roomId);
-      // console.log(data.dongle + " in the location " + roomId);
     } 
     else if (100 < range <= 150) {
       roomId = 100150;
-      // socket.emit('join',roomId);
-      // socket.join(roomId);
-      // console.log(data.dongle + " in the location " + roomId);
     }
     socket.join(roomId);
     console.log(socket.rooms)
   });
+  // Emit alert event to the sender client or clients in the room once listened
+  // Emit normal data event to the sender client
   socket.on("sensorData", (data) => {
     console.log("sensor data detecting on " + data.dongle);
     if (data.temperature >= 213) {
@@ -113,9 +108,6 @@ io.on("connection", (socket) => {
       socket.emit("normalBrake", data.brake);
     }
   });
-  // socket.on("alertForRoom", (reg) => {
-  //   socket.emit("alert", reg);
-  // });
 });
 
 http.listen(port, () => {
