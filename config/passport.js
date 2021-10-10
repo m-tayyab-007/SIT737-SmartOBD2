@@ -10,7 +10,7 @@ module.exports = function (passport) {
         .then((user) => {
           if (!user) {
             return done(null, false, {
-              message: "that email is not registered",
+              message: "Invalid email",
             });
           }
           //match password
@@ -19,7 +19,7 @@ module.exports = function (passport) {
             if (isMatch) {
               return done(null, user);
             } else {
-              return done(null, false, { message: "pass incorrect" });
+              return done(null, false, { message: "invalid password" });
             }
           });
         })
