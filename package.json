@@ -4,7 +4,7 @@
   "description": "Smart-OBD2 for sit725",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --reporter spec --timeout 10000",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -29,7 +29,6 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
-    "mogodb": "0.0.1-security",
     "mongodb": "^4.1.2",
     "mongoose": "^6.0.6",
     "nodemon": "^2.0.12",
@@ -37,5 +36,11 @@
     "passport-local": "^1.0.0",
     "socket.io": "^4.2.0",
     "socket.io-client": "^4.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.2",
+    "superagent": "^6.1.0",
+    "supertest": "^6.1.6"
   }
 }
