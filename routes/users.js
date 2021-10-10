@@ -1,18 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const routerIndex = require("../routes/index").router;
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-let db = require("../dbConnect");
+let db = require("../dbConnect").dbConnect
 let usersCollection;
 setTimeout(() => {
-  usersCollection = db.dbConnect.client.db().collection("users");
+  usersCollection = db.client.db().collection("users");
 }, 500);
-// let dbConnect = db.dbConnect;
-//login handle
-// router.get("/login", (req, res) => {
-//   res.render("login");
-// });
+
 let render = false,
   renderObject,
   redirect = false;
