@@ -1,0 +1,5 @@
+
+applications:
+ - name: SmartOBD2
+   random-route: true
+   memory: 512M
