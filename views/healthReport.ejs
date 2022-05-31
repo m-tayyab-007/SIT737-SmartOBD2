@@ -13,13 +13,13 @@
 
     <!-- Dropdown Trigger -->
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">
-            <%= user.first_name %><i class="material-icons right">arrow_drop_down</i>
+            <%= user.given_name %><i class="material-icons right">arrow_drop_down</i>
         </a></li>
 </ul>
 
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="/homepage" class="brand-logo">Smart OBD2</a>
+        <a id="logo-container" href="/" class="brand-logo">Smart OBD2</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/healthReport">Health Check</a></li>
@@ -28,7 +28,7 @@
 
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">
-                    <%= user.first_name %><i class="material-icons right">arrow_drop_down</i>
+                    <%= user.given_name%><i class="material-icons right">arrow_drop_down</i>
                 </a></li>
         </ul>
     </div>
@@ -46,8 +46,8 @@
                         <div class="progress grean lighten-4">
                             <span>Overall<i class="material-icons">info_outline</i></span>
                             <div id="iginition" class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].overall %>%; animation: grow 2s" ;>
-                                <%= user.car_health[0].overall %>%
+                                style="width: <%= car_health.overall %>%; animation: grow 2s" ;>
+                                <%= car_health.overall %>%
                             </div>
                         </div>
 
@@ -63,8 +63,8 @@
                         <div class="progress grean lighten-4">
                             <span>Iginition System<i class="material-icons">info_outline</i></span>
                             <div id="iginition" class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].iginition %>%; animation: grow 2s" ;>
-                                <%= user.car_health[0].iginition %>%
+                                style="width: <%= car_health.iginition %>%; animation: grow 2s" ;>
+                                <%= car_health.iginition %>%
                             </div>
                         </div>
 
@@ -80,8 +80,8 @@
                         <div class="progress grean lighten-4">
                             <span>Electrical System<i class="material-icons">info_outline</i></span>
                             <div class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].electric %>%; animation: grow 2s;">
-                                <%= user.car_health[0].electric %>%
+                                style="width: <%= car_health.electric %>%; animation: grow 2s;">
+                                <%= car_health.electric %>%
                             </div>
                         </div>
 
@@ -98,8 +98,8 @@
                         <div class="progress grean lighten-4">
                             <span>Coolant System<i class="material-icons">info_outline</i></span>
                             <div class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].coolant %>%; animation: grow 2s;">
-                                <%= user.car_health[0].coolant %>%
+                                style="width: <%= car_health.coolant %>%; animation: grow 2s;">
+                                <%= car_health.coolant %>%
                             </div>
                         </div>
 
@@ -115,8 +115,8 @@
                         <div class="progress grean lighten-4">
                             <span>Lubrication System<i class="material-icons">info_outline</i></span>
                             <div class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].lubrication %>%; animation: grow 2s;">
-                                <%= user.car_health[0].lubrication %>%
+                                style="width: <%= car_health.lubrication %>%; animation: grow 2s;">
+                                <%= car_health.lubrication %>%
                             </div>
                         </div>
 
@@ -133,8 +133,8 @@
                         <div class="progress grean lighten-4">
                             <span>Exhaust System<i class="material-icons">info_outline</i></span>
                             <div class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].exhaust %>%; animation: grow 2s;">
-                                <%= user.car_health[0].exhaust %>%
+                                style="width: <%= car_health.exhaust %>%; animation: grow 2s;">
+                                <%= car_health.exhaust %>%
                             </div>
                         </div>
 
@@ -149,8 +149,8 @@
                         <div class="progress grean lighten-4">
                             <span>Fuel System<i class="material-icons">info_outline</i></span>
                             <div class="determinate green accent-3"
-                                style="width: <%= user.car_health[0].fuel %>%; animation: grow 2s;">
-                                <%= user.car_health[0].fuel %>%
+                                style="width: <%= car_health.fuel %>%; animation: grow 2s;">
+                                <%= car_health.fuel %>%
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,76 @@
+<div class="row">
+    <img src="/assets/background.jpg" alt="backgroundImage" class="responsive-img" style="width:100%;">
+</div>
+<div class="loginSign_up">
+    <h1>Register</h1>
+    <div id="login-page" class="row">
+        <div class="col s12 z-depth-6 card-panel">
+            <form action="/updateDetails" method="POST">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">devices</i>
+                    <select name="code" id="rCode" required>
+                        <option value="" disabled selected>Choose your OBD2 series code</option>
+                        <option value="obd001">OBD001</option>
+                        <option value="obd002">OBD002</option>
+                        <option value="obd003">OBD003</option>
+                    </select>
+                    <label>OBD2 Code</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="brands_choices" name="brand" required>
+                        <option value="" disabled selected>Choose your car brand</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Nissan">Nissan</option>
+                    </select>
+                    <label>Brand</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="models_choices" name="model" disabled required>
+                    </select>
+                    <label>Model</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="years_choices" name="year" disabled required>
+                    </select>
+                    <label>Year</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="serieses_choices" name="series" disabled required>
+                    </select>
+                    <label>Series</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">directions_car</i>
+                    <select id="engines_choices" name="engine" disabled required>
+                    </select>
+                    <label>Engine</label>
+                </div>
+            </div>
+            <p class="center red-text text-darken-4">
+                <%- include ('./partials/messages') %>
+            </p>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button type="submit" class="btn waves-effect waves-light col s12">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <p>Have An Account? <a href="/">Login</a></p>
+</div>

@@ -183,44 +183,6 @@ function displayEngines() {
   // Reinitialize materialize select
   $("select").formSelect();
 }
-//REST api creating users
-const uploadUser = (uploadings) => {
-  $.ajax({
-    url: "/api/users",
-    data: JSON.stringify(uploadings),
-    contentType: "application/json",
-    type: "POST",
-    success: function () {
-      window.location.href = "../../api/users";
-    },
-  });
-};
-const newUser = () => {
-  let code = $("#rCode").val();
-  let first_name = $("#rFirst_name").val();
-  let email = $("#rEmail").val();
-  let password = $("#rPassword").val();
-  let password2 = $("#rPassword2").val();
-  let brand = $("#brands_choices").val();
-  let model = $("#models_choices").val();
-  let year = $("#years_choices").val();
-  let series = $("#serieses_choices").val();
-  let engine = $("#engines_choices").val();
-  let rUser = {
-    code,
-    first_name,
-    email,
-    password,
-    password2,
-    brand,
-    model,
-    year,
-    series,
-    engine,
-  };
-  console.log(rUser);
-  uploadUser(rUser);
-};
 // import socket
 let socket = io();
 // function for trip button
@@ -338,7 +300,7 @@ const requestTrip = () => {
         if (i >= 1) {
           let newestData = drivingData[i];
           let lastData = drivingData[i - 1];
-          if (newestData.timestamp - lastData.timestamp >= 10000) {
+          if (newestData.timestamp - lastData.timestamp >= 100000) {
             x.push(i);
           }
         }
@@ -417,7 +379,29 @@ const repeatAlarm = () => {
     requestAlarm();
   }, 2000);
 };
+//Watson intergration
 
+window.watsonAssistantChatOptions = {
+
+  integrationID: "e660dc0e-8ca7-49fb-b479-1bbe5662be99", // The ID of this integration.
+
+  region: "au-syd", // The region your integration is hosted in.
+
+  serviceInstanceID: "8360d8dc-fb14-4906-9734-5f4d46b2a537", // The ID of your service instance.
+
+  onLoad: function(instance) { instance.render(); }
+
+};
+
+setTimeout(function(){
+
+  const t=document.createElement('script');
+
+  t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+
+  document.head.appendChild(t);
+
+});
 $(document).ready(function () {
   console.log("Ready");
   // modal JQuery

@@ -13,13 +13,13 @@
 
     <!-- Dropdown Trigger -->
     <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">
-            <%= user.first_name %><i class="material-icons right">arrow_drop_down</i>
+            <%= user.given_name %><i class="material-icons right">arrow_drop_down</i>
         </a></li>
 </ul>
 
 <nav class="white" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="/homepage" class="brand-logo">Smart OBD2</a>
+        <a id="logo-container" href="/" class="brand-logo">Smart OBD2</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/healthReport">Health Check</a></li>
@@ -28,7 +28,7 @@
             
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">
-                <%= user.first_name %><i class="material-icons right">arrow_drop_down</i>
+                <%= user.given_name %><i class="material-icons right">arrow_drop_down</i>
             </a></li>
         </ul>
     </div>
@@ -54,7 +54,7 @@
             <h3 class="center pink-text">
                 Car registered:
             </h3>
-            <h5 class="center"><%= user.car %></h5>
+            <h5 class="center"><%= car %></h5>
         </div>
     </div>
     <div class="section">

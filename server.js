@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const app = express();
-let dbConnect = require("./dbConnect");
+// let dbConnect = require("./dbConnect");
 const expressEjsLayout = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+// const log4js = require("log4js");
 const defaultRoute = require("./routes");
-const userRoute = require("./routes/users");
-const dataRoute = require("./routes/sensor");
+// const userRoute = require("./routes/users");
+// const dataRoute = require("./routes/sensor");
+// const logger = log4js.getLogger("SmartOBD-ibmcloud");
 let http = require("http").createServer(app);
 //socket io
 let io = require("socket.io")(http);
@@ -45,8 +47,8 @@ app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 //Routes
 app.use("/", defaultRoute.router);
-app.use("/api/users", userRoute.router);
-app.use("/api/data", dataRoute.router);
+// app.use("/api/users", userRoute.router);
+// app.use("/api/data", dataRoute.router);
 
 io.on("connection", (socket) => {
   console.log("User connected");
