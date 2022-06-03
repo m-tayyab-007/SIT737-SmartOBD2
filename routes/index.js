@@ -15,12 +15,6 @@ userProfileManager.init({
     "https://au-syd.appid.cloud.ibm.com/oauth/v4/0371dfb0-43b0-4e63-8e5a-654cd51031ff",
   profilesUrl: "https://au-syd.appid.cloud.ibm.com",
 });
-// let selfServiceManager = new SelfServiceManager({
-//   // iamApiKey: "jUC5e5nu9jQJn0wbyvymjN9pItaH1WOT0MuIqtIScfRQ",
-//   iamApiKey: "jUC5e5nu9jQJn0wbyvymjN9pItaH1WOT0MuIqtIScfRQ",
-//   managementUrl:
-//     "https://au-syd.appid.cloud.ibm.com/management/v4/0371dfb0-43b0-4e63-8e5a-654cd51031ff",
-// });
 let ibmdb = require("../dbConnect").cloudant;
 let dbName;
 let accessToken;
@@ -58,18 +52,7 @@ router.get("/", (req, res) => {
     }
   });
 });
-//login
-// router.post("/login", (req, res, next) => {
-//   passport.authenticate("local", {
-//     successRedirect: "/homepage",
-//     failureRedirect: "/",
-//     failureFlash: true,
-//   })(req, res, next);
-// });
-//register page
-// router.get("/updateDetails", (req, res) => {
-//   res.render("updateDetails");
-// });
+
 router.post(
   "/updateDetails",
   passport.authenticate(WebAppStrategy.STRATEGY_NAME),
