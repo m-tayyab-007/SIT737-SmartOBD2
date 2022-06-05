@@ -1,6 +1,3 @@
-const User = require("../models/user");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
 const WebAppStrategy = require("ibmcloud-appid").WebAppStrategy;
 
 module.exports = function (passport) {
