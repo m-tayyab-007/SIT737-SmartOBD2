@@ -1,0 +1,114 @@
+swagger: '2.0'
+info:
+  title: Fitness Class
+  version: 2.0.0
+host: cp4i-mock-api.mybluemix.net
+basePath: /
+paths:
+  /waitlist:
+    get:
+      tags:
+        - waitlist
+      summary: Find all instances of the model matched by filter from the data source.
+      operationId: waitlist.find
+      parameters:
+        - name: instructor
+          in: query
+          description:  Filter by instructor          
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Model0'
+      deprecated: false
+  /booking:
+    post:
+      tags:
+        - booking
+      summary: Create a new instance of the model and persist it into the data source.
+      operationId: booking.create
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            description: Model instance data
+            $ref: '#/definitions/bookingReq'
+      responses:
+        '201':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/bookingRes'
+      deprecated: false  
+definitions:
+  bookingReq:
+    description: ''
+    properties:
+      style:
+        type: string
+      city:
+        type: string
+      instructorname:
+        type: string
+      patientname:
+        type: string
+      studio:
+        type: string
+      date:
+        type: string
+        format: date-time
+    additionalProperties: false
+  bookingRes:
+    description: ''
+    properties:
+      bookingID:
+        type: string
+      style:
+        type: string
+      city:
+        type: string
+      instructorname:
+        type: string
+      patientname:
+        type: string
+      studio:
+        type: string
+      status:
+        type: string
+      date:
+        type: string
+        format: date-time
+    additionalProperties: false
+  waitlist:
+    description: ''
+    properties:
+      waitlistID:
+        type: string
+      style:
+        type: string
+      city:
+        type: string
+      patientname:
+        type: string
+      date:
+        type: string
+        format: date-time
+  Model0:
+    type: array
+    items:
+      $ref: '#/definitions/waitlist'
+    additionalProperties: false  
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: waitlist
+    description: ''
+  - name: booking
+    description: ''
