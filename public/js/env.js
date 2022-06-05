@@ -1,221 +1,67 @@
-var Hilux = '<option value="Hilux">Hilux</option>';
-var Camry =
-  '<option value="" disabled selected>Choose model</option> <option value="Camry">Camry</option>';
-var Patrol =
-  '<option value="" disabled selected>Choose model</option> <option value="Patrol">Patrol</option>';
-var Years_Hilux =
-  '<option value="" disabled selected>Choose year</option> <option value="2013">2013</option>';
-var Years_Camry =
-  '<option value="" disabled selected>Choose year</option> <option value="2012">2012</option> <option value="2013">2013</option>';
-var Years_Patrol =
-  '<option value="" disabled selected>Choose year</option> <option value="2014">2014</option>';
-var Serieses_2013_Hilux =
-  '<option value="" disabled selected>Choose series</option> <option value="GGN15R-GGN15">GGN15R-GGN15</option>';
-var Serieses_2012_Camry =
-  '<option value="" disabled selected>Choose series</option> <option value="ACV40R-ACV40">ACV40R-ACV40</option>';
-var Serieses_2013_Camry =
-  '<option value="" disabled selected>Choose series</option> <option value="ASV50R-ASV50">ASV50R-ASV50</option>';
-var Serieses_2014_Patrol =
-  '<option value="" disabled selected>Choose series</option> <option value="GU, Y61-TESY61">GU, Y61-TESY61</option>';
-var Engines_ACV40R_ACV40_2012_Camry =
-  '<option value="" disabled selected>Choose engine</option> <option value="2362cc, 2AZFE I4 16v DOHC VVT MPFI {117kW}">2362cc, 2AZFE I4 16v DOHC VVT MPFI {117kW}</option>';
-var Engines_ASV50R_ASV50_2013_Camry =
-  '<option value="" disabled selected>Choose engine</option> <option value="2494cc, 2ARFE I4 16v DOHC VVT MPFI {133kW}">2494cc, 2ARFE I4 16v DOHC VVT MPFI {133kW}</option>';
-var Engines_GGN15R_GGN15_2013_Hilux =
-  '<option value="" disabled selected>Choose engine</option> <option value="3956cc, 1GRFE V6 24v DOHC MPFI {175kW}">3956cc, 1GRFE V6 24v DOHC MPFI {175kW}</option>';
-var Engines_GU_Y61_TESY61_2014_Patrol =
-  '<option value="" disabled selected>Choose engine</option> <option value="2953cc, ZD30DDTi I4 16v DOHC I/C Turbo CRD {118kW}">2953cc, ZD30DDTi I4 16v DOHC I/C Turbo CRD {118kW}</option>';
+var dataList, funcList;
+let models_Toyota, models_Nissan, years_Hilux, years_Camry, years_Patrol, serieses_2013_Hilux, serieses_2012_Camry, serieses_2013_Camry, serieses_2014_Patrol, engines_GGN15R_GGN15_2013_Hilux, engines_ACV40R_ACV40_2012_Camry, engines_ASV50R_ASV50_2013_Camry, engines_GU_Y61_TESY61_2014_Patrol;
+let displayModels, displayYears, displaySerieses, displayEngines, AverageSpeed, AverageBrake, AverageFuel, AverageTemp;
 
-function models_Toyota() {
-  $("#models_choices").append(Camry);
-  $("#models_choices").append(Hilux);
+async function getReady() {
+  // GET requests to IBM Cloud Function
+  // GET render variables 
+  $.ajax({
+    url: "https://81a29b2d.us-south.apigw.appdomain.cloud/smartobd-test/getBrand",
+    contentType: "application/json",
+    type: "GET",
+    success: function (res) {
+      dataList = res.brand;
+
+      // GET render component functions
+      $.ajax({
+        url: "https://81a29b2d.us-south.apigw.appdomain.cloud/smartobd-test/getFunctions",
+        contentType: "application/json",
+        type: "GET",
+        success: function (res) {
+          funcList = res.functions;
+          models_Toyota = new Function(funcList.models_Toyota);
+          models_Nissan = new Function(funcList.models_Nissan);
+          years_Hilux = new Function(funcList.years_Hilux);
+          years_Camry = new Function(funcList.years_Camry);
+          years_Patrol = new Function(funcList.years_Patrol);
+          serieses_2013_Hilux = new Function(funcList.serieses_2013_Hilux);
+          serieses_2012_Camry = new Function(funcList.serieses_2012_Camry);
+          serieses_2013_Camry = new Function(funcList.serieses_2013_Camry);
+          serieses_2014_Patrol = new Function(funcList.serieses_2014_Patrol);
+          engines_GGN15R_GGN15_2013_Hilux = new Function(funcList.engines_GGN15R_GGN15_2013_Hilux);
+          engines_ACV40R_ACV40_2012_Camry = new Function(funcList.engines_ACV40R_ACV40_2012_Camry);
+          engines_ASV50R_ASV50_2013_Camry = new Function(funcList.engines_ASV50R_ASV50_2013_Camry);
+          engines_GU_Y61_TESY61_2014_Patrol = new Function(funcList.engines_GU_Y61_TESY61_2014_Patrol);
+
+          // GET render component arrangement functions
+          $.ajax({
+            url: "https://81a29b2d.us-south.apigw.appdomain.cloud/smartobd-test/getDisplayFunctions",
+            contentType: "application/json",
+            type: "GET",
+            success: function (res) {
+              console.log(res);
+              displayModels = new Function(res.functions.displayModels);
+              displayYears = new Function(res.functions.displayYears);
+              displaySerieses = new Function(res.functions.displaySerieses);
+              displayEngines = new Function(res.functions.displayEngines);
+              AverageSpeed = new Function('array', res.functions.AverageSpeed);
+              AverageBrake = new Function('array', res.functions.AverageBrake);
+              AverageFuel = new Function('array', res.functions.AverageFuel);
+              AverageTemp = new Function('array', res.functions.AverageTemp);
+            },
+          });
+        },
+      });
+    },
+  });
 }
 
-function models_Nissan() {
-  $("#models_choices").append(Patrol);
-}
 
-function years_Hilux() {
-  $("#years_choices").append(Years_Hilux);
-}
 
-function years_Camry() {
-  $("#years_choices").append(Years_Camry);
-}
-
-function years_Patrol() {
-  $("#years_choices").append(Years_Patrol);
-}
-
-function serieses_2013_Hilux() {
-  $("#serieses_choices").append(Serieses_2013_Hilux);
-}
-
-function serieses_2012_Camry() {
-  $("#serieses_choices").append(Serieses_2012_Camry);
-}
-
-function serieses_2013_Camry() {
-  $("#serieses_choices").append(Serieses_2013_Camry);
-}
-
-function serieses_2014_Patrol() {
-  $("#serieses_choices").append(Serieses_2014_Patrol);
-}
-
-function engines_GGN15R_GGN15_2013_Hilux() {
-  $("#engines_choices").append(Engines_GGN15R_GGN15_2013_Hilux);
-}
-
-function engines_ACV40R_ACV40_2012_Camry() {
-  $("#engines_choices").append(Engines_ACV40R_ACV40_2012_Camry);
-}
-
-function engines_ASV50R_ASV50_2013_Camry() {
-  $("#engines_choices").append(Engines_ASV50R_ASV50_2013_Camry);
-}
-
-function engines_GU_Y61_TESY61_2014_Patrol() {
-  $("#engines_choices").append(Engines_GU_Y61_TESY61_2014_Patrol);
-}
-
-function displayModels() {
-  $("#models_choices option").remove();
-  switch ($("#brands_choices option:selected").text()) {
-    case "Toyota":
-      models_Toyota();
-      displayYears();
-      break;
-    case "Nissan":
-      models_Nissan();
-      displayYears();
-      break;
-  }
-  $("#models_choices").prop("disabled", false);
-  // Reinitialize materialize select
-  $("select").formSelect();
-}
-
-function displayYears() {
-  $("#years_choices option").remove();
-
-  switch ($("#models_choices option:selected").text()) {
-    case "Hilux":
-      years_Hilux();
-      displaySerieses();
-      break;
-    case "Camry":
-      years_Camry();
-      displaySerieses();
-      break;
-    case "Patrol":
-      years_Patrol();
-      displaySerieses();
-      break;
-  }
-  $("#years_choices").prop("disabled", false);
-  // Reinitialize materialize select
-  $("select").formSelect();
-}
-
-function displaySerieses() {
-  $("#serieses_choices option").remove();
-  if ($("#models_choices option:selected").text() == "Hilux") {
-    switch ($("#years_choices option:selected").text()) {
-      case "2013":
-        serieses_2013_Hilux();
-        displayEngines();
-        break;
-    }
-  }
-  if ($("#models_choices option:selected").text() == "Camry") {
-    switch ($("#years_choices option:selected").text()) {
-      case "2012":
-        serieses_2012_Camry();
-        displayEngines();
-        break;
-      case "2013":
-        serieses_2013_Camry();
-        displayEngines();
-        break;
-    }
-  }
-  if ($("#models_choices option:selected").text() == "Patrol") {
-    switch ($("#years_choices option:selected").text()) {
-      case "2014":
-        serieses_2014_Patrol();
-        displayEngines();
-        break;
-    }
-  }
-  $("#serieses_choices").prop("disabled", false);
-  // Reinitialize materialize select
-  $("select").formSelect();
-}
-
-function displayEngines() {
-  $("#engines_choices option").remove();
-  if ($("#years_choices option:selected").text() == "2013") {
-    switch ($("#serieses_choices option:selected").text()) {
-      case "GGN15R-GGN15":
-        engines_GGN15R_GGN15_2013_Hilux();
-        break;
-      case "ASV50R-ASV50":
-        engines_ASV50R_ASV50_2013_Camry();
-        break;
-    }
-  }
-  if ($("#years_choices option:selected").text() == "2012") {
-    switch ($("#serieses_choices option:selected").text()) {
-      case "ACV40R-ACV40":
-        engines_ACV40R_ACV40_2012_Camry();
-        break;
-    }
-  }
-  if ($("#years_choices option:selected").text() == "2014") {
-    switch ($("#serieses_choices option:selected").text()) {
-      case "GU, Y61-TESY61":
-        engines_GU_Y61_TESY61_2014_Patrol();
-        break;
-    }
-  }
-  $("#engines_choices").prop("disabled", false);
-  // Reinitialize materialize select
-  $("select").formSelect();
-}
 // import socket
 let socket = io();
 // function for trip button
 let showTrip = () => {};
-// function to calculate average data
-const AverageSpeed = (array) => {
-  let x = 0;
-  array.forEach((element) => {
-    x += element.speed;
-  });
-  return Math.round(x / array.length);
-};
-const AverageBrake = (array) => {
-  let x = 0;
-  array.forEach((element) => {
-    x += element.brake;
-  });
-  return Math.round(x / array.length);
-};
-const AverageFuel = (array) => {
-  let x = 0;
-  array.forEach((element) => {
-    x += element.fuel;
-  });
-  return Math.round(x / array.length);
-};
-const AverageTemp = (array) => {
-  let x = 0;
-  array.forEach((element) => {
-    x += element.temperature;
-  });
-  return Math.round(x / array.length);
-};
 //show alert once listened
 socket.on("alert", (data) => {
   console.log(
@@ -300,7 +146,7 @@ const requestTrip = () => {
         if (i >= 1) {
           let newestData = drivingData[i];
           let lastData = drivingData[i - 1];
-          if (newestData.timestamp - lastData.timestamp >= 100000) {
+          if (newestData.timestamp - lastData.timestamp >= 10000) {
             x.push(i);
           }
         }
@@ -379,61 +225,53 @@ const repeatAlarm = () => {
     requestAlarm();
   }, 2000);
 };
+
+$(document).ready(
+  getReady().then(function () {
+    console.log("Ready");
+    // modal JQuery
+    $(".modal").modal();
+    //sidenav JQuery
+    $(".sidenav").sidenav();
+    //parallax JQuery
+    $(".parallax").parallax();
+    //Materialize progress bar
+    $(".tooltipped").tooltip();
+    $(".collapsible").collapsible();
+    //Materialize select
+    $("select").formSelect();
+    //Materialize dropdown
+    $(".dropdown-trigger").dropdown();
+    //Responsive select
+    $("#brands_choices").change(function () {
+      displayModels();
+    });
+    $("#models_choices").change(function () {
+      displayYears();
+    });
+    $("#years_choices").change(function () {
+      displaySerieses();
+    });
+    $("#serieses_choices").change(function () {
+      displayEngines();
+    });
+
+    // Record the history trip once user logged in
+    requestTrip();
+
+    repeatAlarm();
+  })
+);
+
 //Watson intergration
-
 window.watsonAssistantChatOptions = {
-
   integrationID: "e660dc0e-8ca7-49fb-b479-1bbe5662be99", // The ID of this integration.
-
   region: "au-syd", // The region your integration is hosted in.
-
   serviceInstanceID: "8360d8dc-fb14-4906-9734-5f4d46b2a537", // The ID of your service instance.
-
   onLoad: function(instance) { instance.render(); }
-
 };
-
 setTimeout(function(){
-
   const t=document.createElement('script');
-
   t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
-
   document.head.appendChild(t);
-
-});
-$(document).ready(function () {
-  console.log("Ready");
-  // modal JQuery
-  $(".modal").modal();
-  //sidenav JQuery
-  $(".sidenav").sidenav();
-  //parallax JQuery
-  $(".parallax").parallax();
-  //Materialize progress bar
-  $(".tooltipped").tooltip();
-  $(".collapsible").collapsible();
-  //Materialize select
-  $("select").formSelect();
-  //Materialize dropdown
-  $(".dropdown-trigger").dropdown();
-  //Responsive select
-  $("#brands_choices").change(function () {
-    displayModels();
-  });
-  $("#models_choices").change(function () {
-    displayYears();
-  });
-  $("#years_choices").change(function () {
-    displaySerieses();
-  });
-  $("#serieses_choices").change(function () {
-    displayEngines();
-  });
-
-  displayModels();
-  // Record the history trip once user logged in
-  requestTrip();
-
-  repeatAlarm();
 });
