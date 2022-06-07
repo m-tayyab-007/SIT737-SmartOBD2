@@ -1,0 +1,73 @@
+swagger: '2.0'
+info:
+  title: Studio Reservation
+  version: 2.0.0
+host: cp4i-mock-api.mybluemix.net
+basePath: /
+paths:
+  /reservation:
+    post:
+      tags:
+        - reservation
+      summary: Create a new instance of the model and persist it into the data source.
+      operationId: reservation.create
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            description: Model instance data
+            $ref: '#/definitions/reservationReq'
+      responses:
+        '201':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/reservationRes'
+      deprecated: false
+definitions:
+  reservationReq:
+    description: ''
+    properties:
+      style:
+        type: string
+      city:
+        type: string
+      instructorname:
+        type: string
+      patientname:
+        type: string
+      date:
+        type: string
+        format: date-time
+    additionalProperties: false
+  reservationRes:
+    description: ''
+    properties:
+      reservationID:
+        type: string
+      style:
+        type: string
+      city:
+        type: string
+      address:
+        type: string
+      instructorname:
+        type: string
+      patientname:
+        type: string
+      studio:
+        type: string
+      date:
+        type: string
+        format: date-time
+    additionalProperties: false
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: reservation
+    description: ''

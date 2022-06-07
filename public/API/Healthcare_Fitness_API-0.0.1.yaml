@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Healthcare_Fitness_API
+  x-ibm-name: healthcare-fitness-api
+components:
+  schemas:
+    booking:
+      type: object
+      properties:
+        instructor:
+          type: string
+        city:
+          type: string
+        style:
+          type: array
+          items:
+            type: string
+        status:
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+      description: ' '
+  securitySchemes:
+    clientId:
+      in: header
+      name: X-IBM-Client-Id
+      type: apiKey
+paths:
+  /booking:
+    post:
+      tags:
+        - booking
+      summary: Create booking.
+      operationId: booking.create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/booking'
+        required: true
+      responses:
+        '201':
+          description: Request was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/booking'
+x-ibm-configuration:
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - invoke:
+          title: Invoke flow
+          version: 2.0.0
+          verb: keep
+          target-url: $(app-connect-designer-url)$(request.path)
+          follow-redirects: false
+          timeout: 60
+          parameter-control:
+            type: blacklist
+          header-control:
+            type: blacklist
+          inject-proxy-headers: true
+          username: $(app-connect-designer-username)
+          password: $(app-connect-designer-password)
+  properties:
+    app-connect-designer-url:
+      description: The URL of the App Connect Designer API endpoint.
+      encoded: false
+      value: https://ace-designer-demo-designer-https-cp4i-trial.cp4i-trial-202141-50rivd-e8b59cf553f37698ff3156d883d193e8-0000.us-east.containers.appdomain.cloud
+    app-connect-designer-username:
+      description: The username required for basic authentication to the App Connect Designer API endpoint.
+      value: 8sxTmnu6
+    app-connect-designer-password:
+      description: The password required for basic authentication to the App Connect Designer API endpoint.
+      value: blNJTZXPj6SoxH31vnQ8Vzm9I40Eih2C
+servers:
+  - url: https://ademo-gw-gateway-cp4i-trial.cp4i-trial-202141-50rivd-e8b59cf553f37698ff3156d883d193e8-0000.us-east.containers.appdomain.cloud/ddd-demo-test/sandbox/Healthcare_Fitness_API
+security:
+  - clientId: []
